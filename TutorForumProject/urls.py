@@ -1,4 +1,4 @@
-"""untitled URL Configuration
+"""TutorForumProject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -13,9 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf.urls import include
+from forum import views
 
 urlpatterns = [
+    url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
+    url(r'^forum/', include('forum.urls'))
 ]
