@@ -2,19 +2,32 @@
 {% load staticfiles %}
 
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        Torum
-        {% block title_block %}
-        Where all your questions go to bed
-        {% endblock %}
-    </title>
-</head>
-<hr>
-<div>
-    {% block body_block %}
-    {% endblock %}
-</div>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			Torum
+			{% block title_block %}
+			Where all your questions go to bed
+			{% endblock %}
+		</title>
+	</head>
+	<hr>
+		<div>
+			{% block body_block %}
+			{% endblock %}
+		</div>
+		<div>
+			<ul>
+				<li><a href='/forum/'>Forum </a></li>
+				<li><a href='/forum/about'>About </a></li>
+				<li><a href='/forum/leisure'>Leisure </a></li>
+				<li><a href='/forum/contact_us'>Contact us </a></li>
+				<li><a href='/forum/FAQ'>Frequently asked questions (FAQ) </a></li>
+				<li><a href='/forum/login'>Login </a></li>
+				<li><a href='/forum/categories'>Categories </a></li>
+				<li><a href='/forum/hall_of_shame'>Hall of Shame </a></li>
+				<li><a href='/forum/latest_news'>Latest News </a></li>
+			</ul>
+		</div>
+	</body>
 </html>
