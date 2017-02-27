@@ -3,9 +3,37 @@
 
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8"/>
+		<style>
+		h1 { 
+			display: block;
+			font-size: 1.4em;
+			margin-top: 0.67em;
+			margin-bottom: 0.67em;
+			margin-left: 0;
+			margin-right: 0;
+			font-weight: bold;
+			}
+		h2 { 
+			display: block;
+			font-size: 1em;
+			margin-top: 0.67em;
+			margin-bottom: 0.67em;
+			margin-left: 0;
+			margin-right: 0;
+			font-weight: normal;
+			}
+		</style>
+		
+		
+		<header>
+				<h1>Torum: A tutor form created by undergraduate students to help undergraduates succeed</h1>
+				<h2> Torum is used to facilitate information between tutors and students who have questions on particular aspects of the course outwith normal office hours.</h2>
+		</header>
+		
+		
 		<title>
-			Torum
+			Torum:
 			{% block title_block %}
 			Where all your questions go to bed
 			{% endblock %}
@@ -30,4 +58,10 @@
 			</ul>
 		</div>
 	</body>
+	<footer>
+			{% block footer_block %}
+		<i>Torum is optimized for learning, testing and training. Tutorials, references and examples are constantly reviewed to avoid errors, but we cannot warrant full correctness of all content.</i>
+		<i>While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy. Copyright 2017 by Torum. All Rights Reserved.</i>
+		    {% endblock %}
+	</footer>
 </html>
