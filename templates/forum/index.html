@@ -8,6 +8,18 @@
 {% block body_block %}
     <h3>WELCOME TO THE UNIVERSITY'S OF GLASGOW OFFICIAL TORUM PAGE</h3>
 	<div>
-		<img src="{% static "images/indexuni.jpg" %}",alt="glasgow uni " />
+		<img src="{% static "images/indexuni.jpg" %}",alt="glasgow uni"/>
+	</div>
+	
+	<div>
+		{% if categories %}
+		<ul>
+			{% for category in categories %}
+				<li>{{ category.title }}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
 	</div>
 {% endblock %}

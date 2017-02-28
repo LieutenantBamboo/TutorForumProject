@@ -1,0 +1,32 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	{{ category.title }}
+{% endblock %}
+
+{% block body_block %}
+	{% if category %}
+		<h1>{{ category.name }}</h1>
+		
+		{% if questions %}
+			<ul>
+			{% for question in questions %}
+				<li><a href="www.google">{{ question.title }}</a></li>
+			{% endfor %}
+			</ul>
+		
+		{% else %}
+			<strong>No pages currently in category.</strong>
+		{% endif %}
+		
+		
+	{% else %}
+		The specified category does not exist!
+	{% endif %}
+{% endblock %}
+				
+				
+				
+				
+				

@@ -1,11 +1,13 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
+from forum.models import Category,Question
 
 
 def index(request):
-    context_dict = {}
-    return render(request, 'forum/index.html', context_dict)
+	category_list = Category.objects.order_by('name')
+	context_dict = {'categories':category_list}
+	return render(request, 'forum/index.html', context_dict)
 
 
 def about(request):
@@ -43,7 +45,21 @@ def FAQ(request):
 def leisure(request):
     context_dict = {}
     return render(request, 'forum/leisure.html', context_dict)
-
+	
+#def show_category(request, category_name_slug):
+#	context_dict={}
+#	try:
+#		category=Category.objects.get(slug=category_name_slug)
+#		questions=Question.objects.filter(category=category)
+#		
+#		context_dict['questions']=questions
+#		context_dict['category']=category
+#	
+#	except Category.DoesNotExist
+#		context_dict['category'] = None
+#		context_dict['pages'] = None
+#	
+#	return render(request, 'forum/show_categories.html', context_dict)
 
 
 
