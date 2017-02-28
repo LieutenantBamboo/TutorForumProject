@@ -1,13 +1,24 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
+class Category(models.Model):
+	name = models.CharField(max_length=128, unique=True)
 
+	def __str__(self): # For Python 2, use __unicode__ too
+		return self.name
+
+
+		
+		
+		
 class Question(models.Model):
+    category=models.ForeignKey(Category)
     max_length = 128
     title = models.CharField(max_length=max_length, unique=True)
     views = models.IntegerField(default=0)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
+    text_field=models.CharField(max_length=10000, unique=False)
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
