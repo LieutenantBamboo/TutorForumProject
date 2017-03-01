@@ -48,6 +48,10 @@ div.intro {
     display: flex;
 }
 
+div.intro h1{
+    padding-left: 10px;
+}
+
 div.login {
 
 }
