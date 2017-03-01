@@ -29,7 +29,7 @@
 </header>
 
 <hr>
-<div class="body">
+<div id="body" class="body">
     {% block body_block %}
     <h2>Torum is used to facilitate information between tutors and students who have questions on particular
         aspects of the course outwith normal office hours.</h2>
@@ -38,15 +38,15 @@
 
 <footer>
     <div id="footer-links" class="links">
-        <a href='/forum/'>Forum </a>
-        <a href='/forum/about'>About </a>
-        <a href='/forum/leisure'>Leisure </a>
-        <a href='/forum/contact_us'>Contact us </a>
-        <a href='/forum/FAQ'> FAQ </a>
-        <a href='/forum/login'>Login </a>
-        <a href='/forum/categories'>Categories </a>
-        <a href='/forum/hall_of_shame'>Hall of Shame </a>
-        <a href='/forum/latest_news'>Latest News </a>
+        <a href="{% url 'index' %}">Forum </a>
+        <a href="{% url 'about' %}">About </a>
+        <a href="{% url 'leisure' %}">Leisure </a>
+        <a href="{% url 'contact_us' %}">Contact us </a>
+        <a href="{% url 'FAQ' %}"> FAQ </a>
+        <a href="{% url 'login' %}">Login </a>
+        <a href="{% url 'categories' %}">Categories </a>
+        <a href="{% url 'hallOfShame' %}">Hall of Shame </a>
+        <a href="{% url 'latestNews' %}">Latest News </a>
     </div>
     <div id="footer-message">
         {% block footer_block %}

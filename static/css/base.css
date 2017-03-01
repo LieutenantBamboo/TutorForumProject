@@ -44,6 +44,10 @@ div.links a {
     text-align: center;
 }
 
+div.intro {
+    display: flex;
+}
+
 div.login {
 
 }

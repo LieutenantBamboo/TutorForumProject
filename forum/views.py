@@ -99,7 +99,7 @@ def register(request):
         profile_form = UserProfileForm()
 
     # Render the template depending on the context
-    return render(request, 'rango/register.html',
+    return render(request, 'forum/register.html',
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
@@ -113,6 +113,7 @@ def user_login(request):
         # Authenticates information
         user = authenticate(username=username, password=password)
 
+        # If correctly authenticated
         if user:
 
             # If active
@@ -132,17 +133,18 @@ def user_login(request):
     else:
         return render(request, 'forum/login.html', {})
 
+
 # def show_category(request, category_name_slug):
-#	context_dict={}
-#	try:
-#		category=Category.objects.get(slug=category_name_slug)
-#		questions=Question.objects.filter(category=category)
-#		
-#		context_dict['questions']=questions
-#		context_dict['category']=category
-#	
-#	except Category.DoesNotExist
-#		context_dict['category'] = None
-#		context_dict['pages'] = None
-#	
-#	return render(request, 'forum/show_categories.html', context_dict)
+# context_dict={}
+# try:
+# 	category=Category.objects.get(slug=category_name_slug)
+# 	questions=Question.objects.filter(category=category)
+#
+# 	context_dict['questions']=questions
+# 	context_dict['category']=category
+#
+# except Category.DoesNotExist
+# 	context_dict['category'] = None
+# 	context_dict['pages'] = None
+#
+# return render(request, 'forum/show_categories.html', context_dict)
