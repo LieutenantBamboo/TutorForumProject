@@ -1,0 +1,52 @@
+h1 {
+    display: block;
+    font-size: 1.4em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+h2 {
+    display: block;
+    font-size: 1em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: normal;
+}
+
+header {
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    position: fixed;
+    background-color: #999999;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+div.body {
+    padding-top: 60px;
+}
+
+div.links {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+div.links a {
+    display: table-cell;
+    text-align: center;
+}
+
+footer {
+    padding-top: 20px;
+}
+
+a{
+    margin: 0 1em 0 0;
+}
