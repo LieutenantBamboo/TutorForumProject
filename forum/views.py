@@ -1,7 +1,10 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
-from forum.models import Category, Question
+from django.contrib.auth import authenticate, login, logout
+from forum.models import Category, Question, UserProfile
+from forum.forms import UserForm, UserProfileForm
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -53,6 +56,81 @@ def FAQ(request):
 def leisure(request):
     context_dict = {}
     return render(request, 'forum/leisure.html', context_dict)
+
+
+def register(request):
+    # Boolean whether registration was successful, false by default
+    registered = False
+
+    # If POST, process data
+    if request.method == 'POST':
+        # Attempt to grab information from the raw input data
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        # If the two forms are valid
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save user data to database
+            user = user_form.save()
+
+            # Hashes the user password and updates it with the save method
+            user.set_password(user.password)
+            user.save()
+
+            # Holds back the saving of the profile model
+            # until data integrity is confirmed
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # Did the user supply a profile picture?
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            # Save the UserProfile model instance
+            profile.save()
+
+            # Show the user registration was successful
+            registered = True
+        else:
+            # Invalid form(s): Print errors to console/log
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    # Render the template depending on the context
+    return render(request, 'rango/register.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        # Requests information using getter
+        # methods that return 'None' if no info
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # Authenticates information
+        user = authenticate(username=username, password=password)
+
+        if user:
+
+            # If active
+            if user.is_active:
+                # Logs user in, sends back to homepage
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                # Warns the user that their account is inactive
+                return HttpResponse("Your account is disabled. Please contact the admins")
+        else:
+            # Bad login details
+            print("Bad login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied")
+
+    # If not POST (positng details), then it's GET, therefore login form is displayed
+    else:
+        return render(request, 'forum/login.html', {})
 
 # def show_category(request, category_name_slug):
 #	context_dict={}
