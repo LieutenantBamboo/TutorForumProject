@@ -43,11 +43,6 @@ def latestNews(request):
     return render(request, 'forum/latestNews.html', context_dict)
 
 
-def login(request):
-    context_dict = {}
-    return render(request, 'forum/login.html', context_dict)
-
-
 def FAQ(request):
     context_dict = {}
     return render(request, 'forum/FAQ.html', context_dict)
@@ -103,7 +98,7 @@ def register(request):
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
-def user_login(request):
+def login(request):
     if request.method == 'POST':
         # Requests information using getter
         # methods that return 'None' if no info
