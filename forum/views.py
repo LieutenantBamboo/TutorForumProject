@@ -4,7 +4,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from forum.models import Category, Question, UserProfile
 from forum.forms import UserForm, UserProfileForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
 
 
 def index(request):
@@ -96,6 +99,21 @@ def register(request):
     # Render the template depending on the context
     return render(request, 'forum/register.html',
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+
+@login_required
+def restricted(request):
+    context_dict = {}
+    return render(request, 'forum/restricted.html', context_dict)
+
+
+@login_required
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+    # Take the user back to the homepage.
+    return HttpResponseRedirect(reverse('index'))
+
 
 
 def login(request):

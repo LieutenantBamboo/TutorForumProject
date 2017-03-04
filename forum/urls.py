@@ -11,5 +11,7 @@ urlpatterns = [
     url(r'^login/', views.login, name='login'),
     url(r'^FAQ/', views.FAQ, name='FAQ'),
     url(r'^leisure/', views.leisure, name='leisure'),
-    url(r'^register/', views.register, name='register')
+    url(r'^register/', views.register, name='register'),
+    url(r'^restricted/', views.restricted, name='restricted'),
+    url(r'^logout/$', views.user_logout, name='logout'),
 ]

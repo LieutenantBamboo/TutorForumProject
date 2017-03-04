@@ -1,5 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE','TutorForumProject')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','TutorForumProject.settings')
 
 import django
 django.setup()
@@ -21,12 +21,12 @@ def populate():
 
 
 
-	categories = {"Maths": {"questions": math_questions},"Physics": {"questions":  Physics_questions},"Computer Science": {"pages": other_pages} }
+	categories = {"Maths": {"questions": math_questions},"Physics": {"questions":  Physics_questions},"Computer Science": {"questions":  Computer_questions} }
 
 
 	for category, category_data in categories.items():
 		c = add_cat(category)
-		for q in cat_data["questions"]:
+		for q in category_data["questions"]:
 			add_question(c, q["title"], q["text_field"],q["views"],q["upvotes"],q["downvotes"])
 
 
@@ -48,7 +48,7 @@ def add_question(category, title, text_field,views,upvotes,downvotes):
 	return q
 
 def add_cat(name):
-    c = Category.objects.get_or_create(title=name)[0]
+    c = Category.objects.get_or_create(name=name)[0]
     c.save()
     return c
 
