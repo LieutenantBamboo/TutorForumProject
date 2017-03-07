@@ -101,9 +101,9 @@ def register(request):
 
 
 @login_required
-def restricted(request):
+def profile(request):
     context_dict = {}
-    return render(request, 'forum/restricted.html', context_dict)
+    return render(request, 'forum/profile.html', context_dict)
 
 
 @login_required
