@@ -22,12 +22,19 @@
 <body>
 
 <header>
-
+    <a href="{% url 'index' %}">Forum </a>
     <div id="header-intro" class="intro">
         <h1>Torum: A tutor form created by undergraduate students to help undergraduates succeed</h1>
     </div>
     <div id="header-login" class="login">
-
+     {% if user.is_authenticated %}
+            <!-- Eventually replace with link to current user profile -->
+			<a href="{% url 'profile' %}">Profile </a>
+			<a href="{% url 'logout' %}">Logout </a>
+		{% else %}
+			<a href="{% url 'login' %}">Sign in </a>
+			<a href="{% url 'register' %}">Sign up </a>
+		{% endif %}
     </div>
 </header>
 
@@ -41,19 +48,10 @@
 
 <footer>
     <div id="footer-links" class="links">
-
-		{% if user.is_authenticated %}
-            <!-- Eventually replace with link to current user profile -->
-			<a href="{% url 'profile' %}">Profile </a>
-			<a href="{% url 'logout' %}">Logout </a>
-		{% else %}
-			<a href="{% url 'login' %}">Sign in </a>
-			<a href="{% url 'register' %}">Sign up </a>
-		{% endif %}
 		<a href="{% url 'categories' %}">Categories </a>
 		<a href="{% url 'hallOfShame' %}">Hall of Shame </a>
 		<a href="{% url 'latestNews' %}">Latest News </a>
-		<a href="{% url 'index' %}">Forum </a>
+
         <a href="{% url 'about' %}">About </a>
         <a href="{% url 'leisure' %}">Leisure </a>
         <a href="{% url 'contact_us' %}">Contact us </a>
