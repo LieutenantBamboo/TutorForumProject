@@ -110,3 +110,5 @@ class UserProfile(models.Model):
     # Defined for the sake of compatibility
     def __unicode__(self):
         return self.user.username
+
+# Random comment
