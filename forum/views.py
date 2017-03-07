@@ -2,17 +2,16 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from forum.models import Category, Question, UserProfile
+from forum.models import College, School, Module, QuestionPage, QuestionPost, UserProfile
 from forum.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 
 
-
 def index(request):
-    category_list = Category.objects.order_by('name')
-    context_dict = {'categories': category_list}
+    college_list = College.objects.order_by('name')
+    context_dict = {'categories': college_list}
     return render(request, 'forum/index.html', context_dict)
 
 
@@ -115,8 +114,7 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
-
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         # Requests information using getter
         # methods that return 'None' if no info
@@ -145,7 +143,6 @@ def login(request):
     # If not POST (positng details), then it's GET, therefore login form is displayed
     else:
         return render(request, 'forum/login.html', {})
-
 
 # def show_category(request, category_name_slug):
 # context_dict={}
