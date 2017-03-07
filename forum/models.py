@@ -70,11 +70,6 @@ class QuestionPost(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
-    slug = models.SlugField(null=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(QuestionPost, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
