@@ -18,7 +18,7 @@ h2 {
     font-weight: normal;
 }
 
-header {
+#header-intro {
     color: #ffffff;
     left: 0px;
     right: 0px;
@@ -38,6 +38,7 @@ header a{
     background-color: #000000;
     box-sizing: border-box;
     width: 100%;
+	margin: 10px;
 }
 
 div.body {
@@ -63,9 +64,7 @@ div.intro h1{
     padding-left: 10px;
 }
 
-div.login {
 
-}
 
 footer {
     padding-top: 20px;
