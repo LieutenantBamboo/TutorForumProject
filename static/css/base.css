@@ -18,7 +18,7 @@ h2 {
     font-weight: normal;
 }
 
-#header-intro {
+header {
     color: #ffffff;
     left: 0px;
     right: 0px;
@@ -31,14 +31,24 @@ h2 {
 
 header a{
     color: #ffffff;
-    left: 0px;
-    right:7000px;
-    top: 0px;
-    position:fixed;
-    background-color: #000000;
-    box-sizing: border-box;
+	margin: 20px;
+    display: table-cell;
     width: 100%;
-	margin: 10px;
+    table-layout: fixed;
+    text-align: center;
+}
+
+
+div.container {
+    display: table;
+}
+
+div.intro {
+    display: table-cell;
+}
+
+div.login {
+    display: table-cell;
 }
 
 div.body {

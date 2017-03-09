@@ -3,77 +3,80 @@
 
 <html lang="en">
 
-<script src="{% static "js/jquery.js" %}></script>
-<script src="{% static "js/forum-jquery.js" %}></script>
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/forum-jquery.js" %}"></script>
 
-	<head>
-		
-		
-		<meta charset="UTF-8"/>
-		<link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}></link>
+<head>
 
-		<title>
-			Torum
-			{% block title_block %}
-			Where all your questions go to bed
-			{% endblock %}
-		</title>
 
-	</head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}"></link>
 
-	<body>
+    <title>
+        Torum
+        {% block title_block %}
+            Where all your questions go to bed
+        {% endblock %}
+    </title>
 
-	<header>
-		
-		<div id="header-intro" class="intro">
-			<h1>Torum: A tutor form created by undergraduate students to help undergraduates succeed</h1>
-		</div>
-		
-			
-		 {% if user.is_authenticated %}
-				<!-- Eventually replace with link to current user profile -->
-				<a href="{% url 'profile' %}">Profile </a>
-				<a href="{% url 'logout' %}">Logout </a>
-			{% else %}
-				<a href="{% url 'login' %}">Sign in </a>
-				<a href="{% url 'register' %}">Sign up </a>
-			{% endif %}
-			<a href="{% url 'index' %}">Forum </a>
-		</div>
-	</header>
+</head>
 
-	<hr>
-	<div id="body" class="body">
-		{% block body_block %}
-		<h2>Torum is used to facilitate information between tutors and students who have questions on particular
-			aspects of the course outwith normal office hours.</h2>
-		{% endblock %}
-	</div>
+<body>
 
-	<footer>
-		<div id="footer-links" class="links">
-			<a href="{% url 'categories' %}">Categories </a>
-			<a href="{% url 'hallOfShame' %}">Hall of Shame </a>
-			<a href="{% url 'latestNews' %}">Latest News </a>
+<header>
 
-			<a href="{% url 'about' %}">About </a>
-			<a href="{% url 'leisure' %}">Leisure </a>
-			<a href="{% url 'contact_us' %}">Contact us </a>
-			<a href="{% url 'FAQ' %}"> FAQ </a>
+<div id="header-container" class="container">
+    <div id=" header-intro" class="intro">
+        <h1><a href="{% url 'index' %}">Torum: </a>A tutor form created by undergraduate students to help undergraduates succeed</h1>
+    </div>
 
-		</div>
-		<div id="footer-message">
-			{% block footer_block %}
-			<p><i>Torum is optimized for learning, testing and training. Tutorials, references and examples are constantly
-				reviewed to avoid errors, but we cannot warrant full correctness of all content.</i></p>
-			<i>While using this site, you agree to have read and accepted our terms of use, cookie and privacy policy.
-				Copyright
-				2017 by Torum. All Rights Reserved.</i>
-			{% endblock %}
-		</div>
+    <div id=" header-login" class="login">
+        {% if user.is_authenticated %}
+            <!-- Eventually replace with link to current user profile -->
+            <a href="{% url 'profile' %}">Profile </a>
+            <a href="{% url 'logout' %}">Logout </a>
+        {% else %}
+            <a href="{% url 'login' %}">Sign in </a>
+            <a href="{% url 'register' %}">Sign up </a>
+        {% endif %}
+    </div>
+</div>
+</header>
 
-	</footer>
+<hr>
+<div id="body" class="body">
+    {% block body_block %}
+        <h2>Torum is used to facilitate information between tutors and students who have questions on particular
+            aspects of the course outwith normal office hours.</h2>
+    {% endblock %}
+</div>
 
-	</body>
+<footer>
+    <div id="footer-links" class="links">
+        <a href="{% url 'categories' %}">Categories </a>
+        <a href="{% url 'hallOfShame' %}">Hall of Shame </a>
+        <a href="{% url 'latestNews' %}">Latest News </a>
+
+        <a href="{% url 'about' %}">About </a>
+        <a href="{% url 'leisure' %}">Leisure </a>
+        <a href="{% url 'contact_us' %}">Contact us </a>
+        <a href="{% url 'FAQ' %}"> FAQ </a>
+
+    </div>
+    <div id="footer-message">
+        {% block footer_block %}
+            <p><i>Torum is optimized for learning, testing and training. Tutorials, references and examples are
+                constantly
+                reviewed to avoid errors, but we cannot warrant full correctness of all content.</i></p>
+            <i>While using this site, you agree to have read and accepted our terms of use, cookie and privacy
+                policy.
+                Copyright
+                2017 by Torum. All Rights Reserved.</i>
+        {% endblock %}
+    </div>
+
+</footer>
+
+</body>
 
 </html>
