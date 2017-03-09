@@ -7,11 +7,12 @@ from forum.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from forum.models import QuestionPost
 
 
 def index(request):
-    college_list = College.objects.order_by('name')
-    context_dict = {'categories': college_list}
+    QuestionPage_list = QuestionPage.objects.order_by('views')[:5]
+    context_dict = {'QuestionPages': QuestionPage_list}
     return render(request, 'forum/index.html', context_dict)
 
 
@@ -30,9 +31,9 @@ def contact_us(request):
     return render(request, 'forum/contact_us.html', context_dict)
 
 
-def categories(request):
+def colleges(request):
     context_dict = {}
-    return render(request, 'forum/categories.html', context_dict)
+    return render(request, 'forum/colleges.html', context_dict)
 
 
 def hallOfShame(request):
@@ -144,17 +145,14 @@ def user_login(request):
     else:
         return render(request, 'forum/login.html', {})
 
-# def show_category(request, category_name_slug):
-# context_dict={}
-# try:
-# 	category=Category.objects.get(slug=category_name_slug)
-# 	questions=Question.objects.filter(category=category)
-#
-# 	context_dict['questions']=questions
-# 	context_dict['category']=category
-#
-# except Category.DoesNotExist
-# 	context_dict['category'] = None
-# 	context_dict['pages'] = None
-#
-# return render(request, 'forum/show_categories.html', context_dict)
+def show_QuestionPage(request,questionPage_name_slug):
+    context_dict={}
+
+    questionPage=QuestionPage.objects.get(slug=questionPage_name_slug)
+    questionPosts=QuestionPost.objects.filter(questionPage=questionPage)
+
+    context_dict['questionPosts']=questionPosts
+    context_dict['questionPage']=questionPage
+
+
+    return render(request, 'forum/questionPage.html', context_dict)

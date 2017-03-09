@@ -1,0 +1,32 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	{{ questionPage.title }}
+{% endblock %}
+
+{% block body_block %}
+	{% if questionPage %}
+		<h1>{{ questionPage.title }}</h1>
+		
+		{% if questionPosts %}
+			<ul>
+			{% for questionPost in questionPosts %}
+				<li><a href="www.google.com">{{ questionPost.title }}</a></li>
+			{% endfor %}
+			</ul>
+		
+		{% else %}
+			<strong>No questionPosts currently in question Page.</strong>
+		{% endif %}
+		
+		
+	{% else %}
+		The specified question Page does not exist!
+	{% endif %}
+{% endblock %}
+				
+				
+				
+				
+				

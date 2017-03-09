@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 class College(models.Model):
     name = models.CharField(max_length=128, unique=True)
 
+    class Meta:
+        verbose_name_plural = "Colleges"
+
+
     def __str__(self):
         return self.name
 
@@ -19,6 +23,9 @@ class School(models.Model):
     college = models.ForeignKey(College)
     name = models.CharField(max_length=128, unique=True)
 
+    class Meta:
+        verbose_name_plural = "Schools"
+
     def __str__(self):
         return self.name
 
@@ -30,6 +37,9 @@ class School(models.Model):
 class Module(models.Model):
     school = models.ForeignKey(School)
     name = models.CharField(max_length=128, unique=True)
+
+    class Meta:
+        verbose_name_plural = "Modules"
 
     def __str__(self):
         return self.name
@@ -45,7 +55,10 @@ class QuestionPage(models.Model):
     title = models.CharField(max_length=max_length, unique=True, null=True)
     locked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        verbose_name_plural = "QuestionPages"
 
     def save(self, *args, **kwargs):
         if self.views < 0:
@@ -71,29 +84,15 @@ class QuestionPost(models.Model):
     downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
 
-    def __str__(self):
-        return self.title
-
-    def __unicode__(self):
-        return self.title
-
-
-# Multiple comments may be posted per QuestionPost (Many to one relationship)
-class Comment(models.Model):
-    max_title_length = 128
-    max_comment_length = 1024
-    category = models.ForeignKey(QuestionPost)
-    title = models.CharField(max_length=max_title_length)
-    content = models.TextField(max_length=max_comment_length)
-    views = models.IntegerField(default=0)
-    pvotes = models.IntegerField(default=0)
-    downvotes = models.IntegerField(default=0)
+    class Meta:
+        verbose_name_plural = "QuestionPosts"
 
     def __str__(self):
         return self.title
 
     def __unicode__(self):
         return self.title
+
 
 
 class UserProfile(models.Model):
@@ -102,6 +101,9 @@ class UserProfile(models.Model):
 
     # Additional Attributes:
     picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    class Meta:
+        verbose_name_plural = "UserProfiles"
 
     # __unicode__() override
     def __str__(self):
@@ -112,3 +114,23 @@ class UserProfile(models.Model):
         return self.user.username
 
 # Random comment
+
+
+# Multiple comments may be posted per QuestionPost (Many to one relationship)
+class Comment(models.Model):
+    max_comment_length = 1024
+    category = models.ForeignKey(QuestionPost)
+    userProfile=models.ForeignKey(UserProfile)
+    content = models.TextField(max_length=max_comment_length)
+    views = models.IntegerField(default=0)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Comments"
+
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.title
