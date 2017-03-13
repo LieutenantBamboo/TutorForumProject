@@ -57,8 +57,7 @@ div.body {
 
 div.links {
     display: table;
-    width: 100%;
-    table-layout: fixed;
+    width:100%;
 }
 
 div.links a {
@@ -74,8 +73,9 @@ div.intro h1{
     padding-left: 10px;
 }
 
+div.container h1{
 
-
+}
 footer {
     padding-top: 20px;
 }

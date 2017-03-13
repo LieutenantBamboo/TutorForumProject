@@ -6,5 +6,20 @@
 {% endblock %}
 
 {% block body_block %}
-	you can only see this page because you are registered
+
+    <div>
+           <h1>you can only see this page because you are registered!</h1>
+            <strong>{{ boldmessage }}</strong><br />
+        <h2>{% if user.is_authenticated %}
+			Welcome {{ user.username }}!
+        {% endif %}
+        </h2>
+        </div>
+        <div>
+             <img src="{% static "images/profilepic.JPG" %}",alt="Profile picture" />
+            <!-- New line -->
+        </div>
+        <div>
+            <h3></h3>
+        </div>
 {% endblock %}
