@@ -12,14 +12,11 @@
             <strong>{{ boldmessage }}</strong><br />
         <h2>{% if user.is_authenticated %}
 			Welcome {{ user.username }}!
-        {% endif %}
+            <img src="{{MEDIA_URL}}{{ user.profile_images }} "/>
+            {% else %}
+        <img src="{% static "images/profilepic.JPG" %}",alt="Profile picture" />
+            {% endif %}
         </h2>
-        </div>
-        <div>
-             <img src="{% static "images/profilepic.JPG" %}",alt="Profile picture" />
-            <!-- New line -->
-        </div>
-        <div>
-            <h3></h3>
-        </div>
+
+	</div>
 {% endblock %}
