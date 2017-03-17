@@ -1,0 +1,14 @@
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	- Questions
+{% endblock %}
+
+{% block body_block %}
+	{% if QuestionPages %}
+        {% for question in QuestionPages %}
+
+        {% endfor %}
+    {% endif %}
+{% endblock %}

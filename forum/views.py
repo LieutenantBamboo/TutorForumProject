@@ -32,8 +32,44 @@ def contact_us(request):
 
 
 def colleges(request):
-    context_dict = {}
+    college_list = College.objects.all()
+    context_dict = {'colleges': college_list}
     return render(request, 'forum/colleges.html', context_dict)
+
+
+def schools(request, college_name_slug):
+    context_dict = {}
+
+    try:
+        college = College.objects.get(slug=college_name_slug)
+        school_list = School.objects.filter(college=college)
+        context_dict['schools'] = school_list
+        context_dict['college'] = college
+
+    except College.DoesNotExist:
+        context_dict['schools'] = None
+        context_dict['college'] = None
+
+    return render(request, 'forum/schools.html', context_dict)
+
+
+def modules(request, college_name_slug, school_name_slug):
+    context_dict = {}
+
+    try:
+        college = College.objects.get(slug=college_name_slug)
+        school = School.objects.get(slug=school_name_slug)
+        module_list = Module.objects.filter(school=school)
+        context_dict['modules'] = module_list
+        context_dict['school'] = school
+        context_dict['college'] = college
+
+    except College.DoesNotExist:
+        context_dict['modules'] = None
+        context_dict['school'] = None
+        context_dict['college'] = None
+
+    return render(request, 'forum/modules.html', context_dict)
 
 
 def hallOfShame(request):
@@ -145,14 +181,27 @@ def user_login(request):
     else:
         return render(request, 'forum/login.html', {})
 
-def show_QuestionPage(request,questionPage_name_slug):
-    context_dict={}
 
-    questionPage=QuestionPage.objects.get(slug=questionPage_name_slug)
-    questionPosts=QuestionPost.objects.filter(questionPage=questionPage)
+# Shows all of the questions
+def show_questions_page(request, module_name_slug):
+    context_dict = {}
 
-    context_dict['questionPosts']=questionPosts
-    context_dict['questionPage']=questionPage
+    module = Module.objects.get(slug=module_name_slug)
+    questions = QuestionPage.objects.filter(module=module)
 
+    context_dict['questions'] = questions
+
+    return render(request, 'forum/questions.html', context_dict)
+
+
+# Show each individual question
+def show_question_page(request, question_page_name_slug):
+    context_dict = {}
+
+    question_page = QuestionPage.objects.get(slug=question_page_name_slug)
+    question_posts = QuestionPost.objects.filter(questionPage=question_page)
+
+    context_dict['questionPosts'] = question_posts
+    context_dict['questionPage'] = question_page
 
     return render(request, 'forum/questionPage.html', context_dict)

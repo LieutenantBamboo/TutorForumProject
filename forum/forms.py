@@ -14,4 +14,10 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('picture',  )
+        fields = ('picture',)
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = QuestionForm
+        fields = ('title', )

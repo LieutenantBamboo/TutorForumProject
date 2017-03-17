@@ -2,18 +2,18 @@
 {% load staticfiles %}
 
 {% block title_block %}
-     - Colleges
+     - Schools in {{ college.name }}
 {% endblock %}
 
 {% block body_block %}
     <div class="body">
-        <div><strong>Colleges are listed below:</strong></div>
+        <div><strong>Schools are listed below:</strong></div>
         <div>
-            {% if colleges %}
+            {% if schools %}
                 <ul>
-                {% for college in colleges %}
+                {% for school in schools %}
                     <li>
-                        <a href="{% url 'schools' college.slug %}">{{ college.name }}</a>
+                        <a href="{% url 'modules' college.slug school.slug %}">{{ school.name }}</a>
                     </li>
                 {% endfor %}
                 </ul>

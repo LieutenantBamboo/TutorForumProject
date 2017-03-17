@@ -38,7 +38,6 @@ header a{
     text-align: center;
 }
 
-
 div.container {
     display: table;
 }
@@ -52,7 +51,7 @@ div.login {
 }
 
 div.body {
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 div.links {

@@ -21,14 +21,17 @@
 
 </head>
 
-<body>
+<body style="
+    padding: 60px;
+">
 
 <header>
 
-<div id="header-container" class="container">
+<div id="header-container" class="container" style="width: 95%;">
     <div id=" header-intro" class="intro">
-        <h1><a href="{% url 'index' %}"><img src="/static/images/tutorlogo.png"/></a>A tutor form created by undergraduate students to help undergraduates succeed
-
+        <a href="{% url 'index' %}" style="width: 20%;"><img src="/static/images/tutorlogo.png"/></a>
+        <h1 style="align-self: center;">
+        A tutor form created by undergraduate students to help undergraduates succeed
         </h1>
     </div>
 
