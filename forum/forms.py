@@ -1,5 +1,5 @@
 from django import forms
-from forum.models import UserProfile
+from forum.models import UserProfile, QuestionPage, QuestionPost
 from django.contrib.auth.models import User
 
 
@@ -17,7 +17,12 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
 
 
-class QuestionForm(forms.ModelForm):
+class QuestionPageForm(forms.ModelForm):
     class Meta:
-        model = QuestionForm
-        fields = ('title', )
+        model = QuestionPage
+        fields = ('title',)
+
+class QuestionPostForm(forms.ModelForm):
+    class Meta:
+        model = QuestionPost
+        fields = ('text_field', )

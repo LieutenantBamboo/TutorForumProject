@@ -9,16 +9,16 @@
     <div class="body">
         {% if registered %}
             <strong>Please post your question:</strong>
-            <form id="user_form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
+            <form id="question_form" method="post" action="{% url 'create_question' %}" enctype="multipart/form-data">
 
                 {% csrf_token %}
 
                 <!-- Display each form -->
-                {{ user_form.as_p }}
-                {{ profile_form.as_p }}
+                {{ question_page_form.as_p }}
+                {{ question_post_form.as_p }}
 
                 <!-- Provide a button to click to submit the form -->
-                <input type="submit" name="submit" value="Register">
+                <input type="submit" name="submit" value="Post">
             </form>
         {% else %}
             <h1>Register your Torum account: </h1>

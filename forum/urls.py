@@ -16,6 +16,7 @@ urlpatterns = [
         views.modules, name='modules'),
 
     # Question url setup
+    url(r'^questions/create/', views.create_question, name='create_question'),
     url(r'^questions/$', views.index, name='redirect'),
     url(r'^questions/(?P<module_name_slug>[\w\-]+)/$', views.show_questions_page, name='question'),
 

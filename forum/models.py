@@ -66,8 +66,8 @@ class Module(models.Model):
 class QuestionPage(models.Model):
     module = models.ForeignKey(Module, null=True)
     max_length = 128
-    id = models.IntegerField(   unique=True, primary_key=True)
-    title = models.CharField(max_length=max_length, unique=True, null=True)
+    id = models.IntegerField(unique=True, primary_key=True)
+    title = models.CharField(max_length=max_length, unique=True, default='untitled')
     locked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True, null=True)
@@ -88,13 +88,12 @@ class QuestionPage(models.Model):
         return self.title
 
 
-# Contains each question, whether it be a
+# Contains each question, whether it be a question or an answer
 class QuestionPost(models.Model):
     page = models.ForeignKey(QuestionPage)
     max_length = 128
     # Boolean as to whether it is a student question or a tutor answer
     question = models.BooleanField(default=False)
-    title = models.CharField(max_length=max_length, unique=True)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
@@ -107,7 +106,6 @@ class QuestionPost(models.Model):
 
     def __unicode__(self):
         return self.title
-
 
 
 class UserProfile(models.Model):
@@ -128,16 +126,16 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+
 # Random comment
 
 
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
 class Comment(models.Model):
     max_comment_length = 1024
-    category = models.ForeignKey(QuestionPost)
-    userProfile=models.ForeignKey(UserProfile, null=True)
+    post = models.ForeignKey(QuestionPost)
+    user_profile = models.ForeignKey(UserProfile, null=True)
     content = models.TextField(max_length=max_comment_length)
-    views = models.IntegerField(default=0)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
 
@@ -149,3 +147,9 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+#class Photo(models.Model):
+#    post = models.ForeignKey(QuestionPost)
+#    image = models.ImageField(upload_to='')
+#   description = models.CharField(max_length=160)

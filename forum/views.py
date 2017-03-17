@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from forum.models import College, School, Module, QuestionPage, QuestionPost, UserProfile
-from forum.forms import UserForm, UserProfileForm
+from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -181,6 +181,38 @@ def user_login(request):
     else:
         return render(request, 'forum/login.html', {})
 
+
+def create_question(request):
+    if request.method == 'POST':
+        # Attempt to grab information from the raw input data
+        question_page_form = QuestionPageForm(data=request.POST)
+        question_post_form = QuestionPostForm(data=request.POST)
+
+        # If the two forms are valid
+        if question_page_form.is_valid() and question_post_form.is_valid():
+            # Save user data to database
+
+            # Holds back the saving of the question_page
+            # until question_post data integrity is confirmed
+            question_page = question_page_form.save()
+            question_post = question_post_form.save(commit=False)
+            question_post.page = question_page
+
+            # For later implementation if we want pics in posts
+            # Did the user supply a post picture?
+            # if 'picture' in request.FILES:
+            #    profile.picture = request.FILES['picture']
+
+            # Save the QuestionPost model instance
+            question_post.save()
+        else:
+            # Invalid form(s): Print errors to console/log
+            print(question_page_form.errors, question_post_form.errors)
+    else:
+        return render(request, 'forum/create_question.html', {})
+
+    return render(request, 'forum/create_question.html',
+                  {'question_page_form': question_page_form, 'question_post_form': question_post_form})
 
 # Shows all of the questions
 def show_questions_page(request, module_name_slug):
