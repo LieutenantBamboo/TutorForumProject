@@ -127,7 +127,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-# Random comment
+# YEA BOI
 
 
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
