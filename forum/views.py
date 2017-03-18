@@ -7,7 +7,7 @@ from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPos
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from forum.models import QuestionPost
+from forum.models import QuestionPost,Comment
 
 
 def index(request):
@@ -233,6 +233,7 @@ def show_question_page(request, question_page_name_slug):
 
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
     question_posts = QuestionPost.objects.filter(questionPage=question_page)
+    comments=Comment.objects.filter()
 
     context_dict['questionPosts'] = question_posts
     context_dict['questionPage'] = question_page

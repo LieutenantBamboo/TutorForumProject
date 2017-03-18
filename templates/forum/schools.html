@@ -7,7 +7,7 @@
 
 {% block body_block %}
     <div class="body">
-        <div><strong>Schools are listed below:</strong></div>
+        <div><strong>{{ college.name }} schools are listed below:</strong></div>
         <div>
             {% if schools %}
                 <ul>
@@ -17,6 +17,8 @@
                     </li>
                 {% endfor %}
                 </ul>
+			{% else %}
+				<strong>There are no schools available for {{ college.name }}</strong>
             {% endif %}
         </div>
     </div>

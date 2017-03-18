@@ -10,7 +10,7 @@
         <p>The questions for {{ module }} are:</p>
          <ul>
              {%  for question in questions %}
-                <li>{{ question.title }}</li>
+                <li><a href="/questions/{{ module }}/ {{ question }}">{{ question.title }}</a></li>
              {% endfor %}
             {
          </ul>

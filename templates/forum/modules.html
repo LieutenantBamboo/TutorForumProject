@@ -11,9 +11,9 @@
         <div>
             {% if modules %}
                 <ul>
-                {% for modules in modules %}
+                {% for module in modules %}
                     <li>
-                        <a href="{% url 'questions' module.slug %}">{{ module.name }}</a>
+                        <a href="/forum/questions/{{ module.slug }}">{{ module.name }}</a>
                     </li>
                 {% endfor %}
                 </ul>

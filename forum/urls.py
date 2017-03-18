@@ -19,7 +19,8 @@ urlpatterns = [
     # Question url setup
     url(r'^questions/create/', views.create_question, name='create_question'),
     url(r'^questions/$', views.index, name='redirect'),
-    url(r'^questions/(?P<module_name_slug>[\w\-]+)/$', views.show_questions_page, name='question'),
+    url(r'^questions/(?P<module_name_slug>[\w\-]+)/$', views.show_questions_page, name='questions'),
+    url(r'^questions/(?P<module_name_slug>[\w\-]+)/(?P<question_name_slug>[\w\-]+)/$', views.show_question_page, name='question'),
 
     # Miscellaneous urls
     url(r'^about/', views.about, name='about'),

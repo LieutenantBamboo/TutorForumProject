@@ -97,6 +97,7 @@ class QuestionPost(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
+    #slug = models.SlugField(unique=True, default="")
 
     class Meta:
         verbose_name_plural = "QuestionPosts"
@@ -133,7 +134,7 @@ class UserProfile(models.Model):
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
 class Comment(models.Model):
     max_comment_length = 1024
-    post = models.ForeignKey(QuestionPost)
+    post = models.ForeignKey(QuestionPost, default="")
     user_profile = models.ForeignKey(UserProfile, null=True)
     content = models.TextField(max_length=max_comment_length)
     upvotes = models.IntegerField(default=0)
@@ -143,10 +144,10 @@ class Comment(models.Model):
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.title
+        return self.post.page.title
 
     def __unicode__(self):
-        return self.title
+        return self.post.page.title
 
 
 #class Photo(models.Model):
