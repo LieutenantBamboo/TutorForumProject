@@ -23,6 +23,7 @@ class QuestionPageForm(forms.ModelForm):
         fields = ('title',)
 
 class QuestionPostForm(forms.ModelForm):
+    text_field = forms.CharField(max_length=128,help_text = "Please enter the title of the page.")
     class Meta:
         model = QuestionPost
         fields = ('text_field', )

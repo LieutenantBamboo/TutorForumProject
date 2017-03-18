@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^colleges/(?P<college_name_slug>[\w\-]+)/(?P<school_name_slug>[\w\-]+)/$',
         views.modules, name='modules'),
 
+
     # Question url setup
     url(r'^questions/create/', views.create_question, name='create_question'),
     url(r'^questions/$', views.index, name='redirect'),

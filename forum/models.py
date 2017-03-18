@@ -102,10 +102,10 @@ class QuestionPost(models.Model):
         verbose_name_plural = "QuestionPosts"
 
     def __str__(self):
-        return self.title
+        return self.page.title
 
     def __unicode__(self):
-        return self.title
+        return self.page.title
 
 
 class UserProfile(models.Model):

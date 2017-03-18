@@ -222,6 +222,7 @@ def show_questions_page(request, module_name_slug):
     questions = QuestionPage.objects.filter(module=module)
 
     context_dict['questions'] = questions
+    context_dict['module']=module_name_slug
 
     return render(request, 'forum/questions.html', context_dict)
 
