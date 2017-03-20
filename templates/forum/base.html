@@ -12,6 +12,14 @@
     <meta charset="UTF-8"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}"></link>
 
+    <div class="search">
+        <form method="get" action = "index.html">
+        <input type ="text" name="search" placeholder="Search a topic here..."><input/>
+        <input type="submit" value="Search Here"><input/>
+        </form>
+    </div>
+
+
     <title>
         Torum
         {% block title_block %}
