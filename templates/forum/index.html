@@ -6,27 +6,34 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>WELCOME TO THE UNIVERSITY'S OF GLASGOW OFFICIAL TORUM PAGE</h1>
-{% if user.is_authenticated %}
-    Welcome {{ user.username }}!
-{% else %}
-	hey there stranger. 
-{% endif %}
-<div>
-    <img src="{% static 'images/indexuni.jpg' %}",alt="glasgow uni"/>
-    <a href="{% url 'create_question' %}"><img src="{% static 'images/ask_a_question.jpg' %}",alt="ask a question"/> </a>
-</div>
+    <div class="container">
+        <h1>WELCOME TO THE UNIVERSITY'S OF GLASGOW OFFICIAL TORUM PAGE</h1>
+        {% if user.is_authenticated %}
+            Welcome {{ user.username }}!
+        {% else %}
+            hey there stranger.
+        {% endif %}
 
-<div>
-    {% if QuestionPages %}
-    <p>5 most viewed Question pages: </p>
-    <ul>
-        {% for questionPage in QuestionPages %}
-        <li>{{ questionPage.title }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <strong>There are no categories present.</strong>
-    {% endif %}
-</div>
+
+        <div class="row">
+            <div class="link">
+                <img src="{% static 'images/indexuni.jpg' %}",alt="glasgow uni"/>
+                <a href="{% url 'create_question' %}"><img src="{% static 'images/ask_a_question.jpg' %}",alt="ask a question"/> </a>
+            </div>
+        </div>
+
+
+        <div>
+            {% if QuestionPages %}
+            <p>5 most viewed Question pages: </p>
+            <ul>
+                {% for questionPage in QuestionPages %}
+                <li>{{ questionPage.title }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <strong>There are no categories present.</strong>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

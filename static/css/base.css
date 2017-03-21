@@ -84,3 +84,24 @@ a{
 }
 
 
+h1 {
+    display: block;
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: 0.67em;
+    margin-left: 0.67em;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+
+.link {
+    position:relative;
+    margin: 0 0 20px 20px;
+    float:right;
+    clear:left;
+    width: 120px;
+    padding: 100%;
+    top:10%;
+    right:5%;
+	}
