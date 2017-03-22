@@ -97,7 +97,8 @@ class QuestionPost(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
-    #slug = models.SlugField(unique=True, default="")
+
+    # slug = models.SlugField(unique=True, default="")
 
     class Meta:
         verbose_name_plural = "QuestionPosts"
@@ -149,8 +150,7 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.post.page.title
 
-
-#class Photo(models.Model):
+# class Photo(models.Model):
 #    post = models.ForeignKey(QuestionPost)
 #    image = models.ImageField(upload_to='')
 #   description = models.CharField(max_length=160)
