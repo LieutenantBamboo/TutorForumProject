@@ -2,26 +2,27 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	{{ questionPage.title }}
+	- {{ module.name }}: {{ question_page.title }}
 {% endblock %}
 
 {% block body_block %}
-	{% if questionPage %}
-		<h1>{{ questionPage.title }}</h1>
+	{% if question_page %}
+		<h1>{{ question_page.title }}</h1>
 		
-		{% if questionPosts %}
-			<ul>
-			{% for questionPost in questionPosts %}
-				<li><a href="www.google.com">{{ questionPost.title }}</a></li>
+		{% if question_posts %}
+			<div>
+			{% for question_post in question_posts %}
+				<strong>{{ question_post.title }}</strong>
+                {{ question_post.text_field }}
 			{% endfor %}
-			</ul>
+            </div>
 		
 		{% else %}
-			<strong>No questionPosts currently in question Page.</strong>
+			<strong>No posts yet!</strong>
 		{% endif %}
 		
 		
 	{% else %}
-		The specified question Page does not exist!
+		The specified question page does not exist!
 	{% endif %}
 {% endblock %}
