@@ -120,5 +120,12 @@ h1 {
     color:blue;
 }
 .no-bullets{
+     padding-right: 10px;
     list-style-type: none;
+
+}
+
+#header-search{
+    position:relative;
+     float:right;
 }

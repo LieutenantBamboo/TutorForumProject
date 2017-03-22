@@ -30,3 +30,4 @@ class QuestionPostForm(forms.ModelForm):
     class Meta:
         model = QuestionPost
         fields = ('text_field',)
+

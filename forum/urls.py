@@ -28,12 +28,12 @@ urlpatterns = [
     url(r'^hall_of_shame/', views.hallOfShame, name='hallOfShame'),
     url(r'^latest_news/', views.latestNews, name='latestNews'),
     url(r'^FAQ/', views.FAQ, name='FAQ'),
-    url(r'^leisure/', views.leisure, name='leisure'),
     url(r'^register/', views.register, name='register'),
     url(r'^profile/', views.profile, name='profile'),
     # Login url setup
     url(r'^login/', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^search/$', views.search, name='search'),
 
-    # how to add a link to questionPage?? need to add module,
+
 ]

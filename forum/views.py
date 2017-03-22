@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.template import RequestContext
 from forum.models import QuestionPost, Comment
+from django.contrib.postgres import *
 import uuid
 
 
@@ -87,11 +88,6 @@ def latestNews(request):
 def FAQ(request):
     context_dict = {}
     return render(request, 'forum/FAQ.html', context_dict)
-
-
-def leisure(request):
-    context_dict = {}
-    return render(request, 'forum/leisure.html', context_dict)
 
 
 def register(request):
@@ -258,3 +254,18 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     context_dict['module'] = module
 
     return render(request, 'forum/questionPage.html', context_dict)
+
+
+def search(request):
+    if request.method == 'GET':
+        searchText=request.GET.get('search')
+        answers=QuestionPage.objects.filter(title=searchText)
+    else:
+       answers=''
+
+    context_dict = {}
+    context_dict['answers']=answers
+
+
+
+    return render(request, 'forum/search.html', context_dict)
