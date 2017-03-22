@@ -1,11 +1,8 @@
 h1 {
     display: block;
-    background-color: transparent;
-    font-size: 1.5em;
-    color: cornflowerblue;
-    line-height: 2em;
-    margin-top: 50px;
-    margin-bottom: 20px;
+    font-size: 1.2em;
+    margin-top: 1em;
+    margin-bottom: 0.67em;
     margin-left: 0.67em;
     margin-right: 0;
     font-weight: bold;
@@ -14,7 +11,6 @@ h1 {
 h2 {
     display: block;
     font-size: 1em;
-    color: lightblue;
     margin-top: 0.67em;
     margin-bottom: 0.67em;
     margin-left: 0;
@@ -23,36 +19,26 @@ h2 {
 }
 
 header {
-    position:relative;
-    background-color: black;
-    color: aliceblue;
+    color: #ffffff;
     left: 0px;
     right: 0px;
     top: 0px;
     position: fixed;
+    background-color: #000000;
     box-sizing: border-box;
     width: 100%;
 }
 
-div.header-search {
-    position: absolute;
-    float:right;
-    top: 0px;
-    right: 0px;
-}
-div.header-login {
-    position: absolute;
-    float:right;
+header a{
     color: #ffffff;
 	margin: 20px;
-    display: in-line;
+    display: table-cell;
     width: 100%;
     table-layout: fixed;
     text-align: center;
 }
 
 div.container {
-    color: lightblue;
     display: table;
 }
 
@@ -65,7 +51,6 @@ div.login {
 }
 
 div.body {
-    color: cadetblue;
     padding-top: 20px;
 }
 
@@ -75,7 +60,6 @@ div.links {
 }
 
 div.links a {
-    color: cornflowerblue;
     display: table-cell;
     text-align: center;
 }
@@ -92,7 +76,6 @@ div.container h1{
 
 }
 footer {
-    color: cadetblue;
     padding-top: 20px;
 }
 
@@ -118,17 +101,10 @@ h1 {
     float:right;
     clear:left;
     width: 120px;
-    padding: 20px;
-    top: 5%;
-    right: 10%;
+    padding: 100%;
+    top:10%;
+    right:5%;
 	}
-
-.link image {
-    position: absolute;
-    float:right;
-    top: 0px;
-    right: 0px;
-}
 
 .question-wrapper {
     display: block;
@@ -136,10 +112,4 @@ h1 {
 
 .question-bar {
     display: table-cell;
-    background-color: black;
-    color: blue;
-}
-
-.no-bullets{
-    list-style-type: none;
 }
