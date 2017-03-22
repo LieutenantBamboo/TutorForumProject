@@ -67,7 +67,7 @@ class QuestionPage(models.Model):
     module = models.ForeignKey(Module, null=True)
     max_length = 128
     id = models.IntegerField(unique=True, primary_key=True)
-    title = models.CharField(max_length=max_length, unique=True, default='untitled')
+    title = models.CharField(max_length=max_length, unique=True)
     locked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True, null=True)
@@ -90,7 +90,7 @@ class QuestionPage(models.Model):
 
 # Contains each question, whether it be a question or an answer
 class QuestionPost(models.Model):
-    page = models.ForeignKey(QuestionPage)
+    page = models.ForeignKey(QuestionPage, null=True)
     max_length = 128
     # Boolean as to whether it is a student question or a tutor answer
     question = models.BooleanField(default=False)
