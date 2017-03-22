@@ -10,14 +10,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <meta charset="UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}"></link>
-
-    <div class="search">
-        <form method="get" action = "index.html">
-        <input type ="text" name="search" placeholder="Search a topic here..."><input/>
-        <input type="submit" value="Search Here"><input/>
-        </form>
-    </div>
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
 
 
     <title>
@@ -41,6 +34,13 @@
         <h1 style="align-self: center;">
         A tutor form created by undergraduate students to help undergraduates succeed
         </h1>
+    </div>
+
+    <div id="header-search" class="search" style="display: table-cell; align-self: center;">
+        <form method="get" action = "index.html">
+        <input type ="text" name="search" placeholder="Search a topic here..."/>
+        <input type="submit" value="Search Here"/>
+        </form>
     </div>
 
     <div id=" header-login" class="login">
