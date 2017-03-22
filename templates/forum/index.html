@@ -11,7 +11,8 @@
         {% if user.is_authenticated %}
             Welcome {{ user.username }}!
         {% else %}
-            hey there stranger.
+            <br></br>
+            Please log in to continue.
         {% endif %}
 
 
@@ -19,7 +20,7 @@
             <div>
                 <img src="{% static 'images/indexuni.jpg' %}",alt="glasgow uni"/>
             </div>
-                <div class = "">
+                <div class = "image">
                 <a href="{% url 'create_question' %}"><img src="{% static 'images/ask_a_question.jpg' %}",alt="ask a question"/> </a>
                 </div>
         </div>
