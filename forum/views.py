@@ -235,20 +235,21 @@ def show_questions_page(request, module_name_slug):
     questions = QuestionPage.objects.filter(module=module)
 
     context_dict['questions'] = questions
-    context_dict['module'] = module_name_slug
+    context_dict['module'] = module
 
     return render(request, 'forum/questions.html', context_dict)
 
 
 # Show each individual question
-def show_question_page(request, question_page_name_slug):
+def show_question_page(request, module_name_slug, question_page_name_slug):
     context_dict = {}
 
+    module = Module.objects.get(slug=module_name_slug)
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
-    question_posts = QuestionPost.objects.filter(questionPage=question_page)
-    comments = Comment.objects.filter()
+    question_posts = QuestionPost.objects.filter(page=question_page)
 
     context_dict['questionPosts'] = question_posts
     context_dict['questionPage'] = question_page
+    context_dict['module'] = module
 
     return render(request, 'forum/questionPage.html', context_dict)

@@ -2,19 +2,19 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	- Questions
+	- {{ module.name }} Questions
 {% endblock %}
 
 {% block body_block %}
 	{% if questions %}
-        <p>The questions for {{ module }} are:</p>
+        <div class="question-wrapper">
+        <p>The questions for {{ module.name }} are:</p>
          <ul>
              {%  for question in questions %}
-                <li><a href="/questions/{{ module }}/ {{ question }}">{{ question.title }}</a></li>
+                <li><a href="{% url 'redirect' %}{{ module.slug }}/{{ question.slug }}">{{ question.title }}</a></li>
              {% endfor %}
-            {
          </ul>
-
+        </div>
     {% else %}
         <strong>There are no questions for this module</strong>
     {% endif %}
