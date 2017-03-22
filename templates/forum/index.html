@@ -16,19 +16,21 @@
 
 
         <div class="row">
-            <div class="link">
+            <div>
                 <img src="{% static 'images/indexuni.jpg' %}",alt="glasgow uni"/>
-                <a href="{% url 'create_question' %}"><img src="{% static 'images/ask_a_question.jpg' %}",alt="ask a question"/> </a>
             </div>
+                <div class = "">
+                <a href="{% url 'create_question' %}"><img src="{% static 'images/ask_a_question.jpg' %}",alt="ask a question"/> </a>
+                </div>
         </div>
 
 
         <div>
-            {% if QuestionPages %}
+            {% if question_pages %}
             <p>5 most viewed Question pages: </p>
             <ul>
-                {% for questionPage in QuestionPages %}
-                <li>{{ questionPage.title }}</li>
+                {% for question_page in question_pages %}
+                <li>{{ question_page.title }}</li>
                 {% endfor %}
             </ul>
             {% else %}

@@ -9,11 +9,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.template import RequestContext
 from forum.models import QuestionPost, Comment
+import uuid
 
 
 def index(request):
-    QuestionPage_list = QuestionPage.objects.order_by('views')[:5]
-    context_dict = {'QuestionPages': QuestionPage_list}
+    question_page_list = QuestionPage.objects.order_by('views')[:5]
+    context_dict = {'question_pages': question_page_list}
     return render(request, 'forum/index.html', context_dict)
 
 
@@ -206,9 +207,12 @@ def create_question(request):
 
             # Holds back the saving of the question_page
             # until question_post data integrity is confirmed
-            question_page = question_page_form.save()
+            question_page = question_page_form.save(commit=False)
             question_post = question_post_form.save(commit=False)
             question_post.page = question_page
+
+            question_post.question = True
+            question_page.save()
 
             # For later implementation if we want pics in posts
             # Did the user supply a post picture?
@@ -221,7 +225,8 @@ def create_question(request):
             # Invalid form(s): Print errors to console/log
             print(question_page_form.errors, question_post_form.errors)
     else:
-        return render(request, 'forum/create_question.html', {})
+        question_post_form = QuestionPostForm
+        question_page_form = QuestionPageForm
 
     return render(request, 'forum/create_question.html',
                   {'question_page_form': question_page_form, 'question_post_form': question_post_form})

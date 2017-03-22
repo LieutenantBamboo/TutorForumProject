@@ -1,6 +1,7 @@
 from django import forms
 from forum.models import UserProfile, QuestionPage, QuestionPost
 from django.contrib.auth.models import User
+from forum.models import Module
 
 
 class UserForm(forms.ModelForm):
@@ -8,7 +9,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'password',)
 
 
 class UserProfileForm(forms.ModelForm):
@@ -18,12 +19,14 @@ class UserProfileForm(forms.ModelForm):
 
 
 class QuestionPageForm(forms.ModelForm):
+    # module = forms.ModelChoiceField(queryset=Module.objects.all().order_by('name'))
+
     class Meta:
         model = QuestionPage
-        fields = ('title',)
+        fields = ('title',)  # 'module',)
+
 
 class QuestionPostForm(forms.ModelForm):
-    text_field = forms.CharField(max_length=128,help_text = "Please enter the title of the page.")
     class Meta:
         model = QuestionPost
-        fields = ('text_field', )
+        fields = ('text_field',)
