@@ -1,13 +1,14 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from forum.models import College, School, Module, QuestionPage, QuestionPost, UserProfile
 from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
-from forum.models import QuestionPost,Comment
+from django.template import RequestContext
+from forum.models import QuestionPost, Comment
 
 
 def index(request):
@@ -152,6 +153,11 @@ def user_logout(request):
 
 
 def user_login(request):
+    next = ''
+
+    if request.GET:
+        next = request.GET.get('next')
+
     if request.method == 'POST':
         # Requests information using getter
         # methods that return 'None' if no info
@@ -168,7 +174,11 @@ def user_login(request):
             if user.is_active:
                 # Logs user in, sends back to homepage
                 login(request, user)
-                return HttpResponseRedirect(reverse('index'))
+
+                if next is not '':
+                    return HttpResponseRedirect(next)
+                else:
+                    return HttpResponseRedirect(reverse('index'))
             else:
                 # Warns the user that their account is inactive
                 return HttpResponse("Your account is disabled. Please contact the admins")
@@ -179,9 +189,11 @@ def user_login(request):
 
     # If not POST (positng details), then it's GET, therefore login form is displayed
     else:
-        return render(request, 'forum/login.html', {})
+        # return render(request, 'forum/login.html', {})
+        return render(request, 'forum/login.html', {'next': next, })
 
 
+@login_required
 def create_question(request):
     if request.method == 'POST':
         # Attempt to grab information from the raw input data
@@ -214,6 +226,7 @@ def create_question(request):
     return render(request, 'forum/create_question.html',
                   {'question_page_form': question_page_form, 'question_post_form': question_post_form})
 
+
 # Shows all of the questions
 def show_questions_page(request, module_name_slug):
     context_dict = {}
@@ -222,7 +235,7 @@ def show_questions_page(request, module_name_slug):
     questions = QuestionPage.objects.filter(module=module)
 
     context_dict['questions'] = questions
-    context_dict['module']=module_name_slug
+    context_dict['module'] = module_name_slug
 
     return render(request, 'forum/questions.html', context_dict)
 
@@ -233,7 +246,7 @@ def show_question_page(request, question_page_name_slug):
 
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
     question_posts = QuestionPost.objects.filter(questionPage=question_page)
-    comments=Comment.objects.filter()
+    comments = Comment.objects.filter()
 
     context_dict['questionPosts'] = question_posts
     context_dict['questionPage'] = question_page
