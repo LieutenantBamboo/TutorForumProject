@@ -1,6 +1,7 @@
 h1 {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.5em;
+    color:cornflowerblue;
     margin-top: 1em;
     margin-bottom: 0.67em;
     margin-left: 0.67em;
@@ -19,7 +20,7 @@ h2 {
 }
 
 header {
-    color: #ffffff;
+    color: aliceblue;
     left: 0px;
     right: 0px;
     top: 0px;
@@ -40,6 +41,7 @@ header a{
 
 div.container {
     display: table;
+    color: lightblue;
 }
 
 div.intro {
@@ -51,6 +53,7 @@ div.login {
 }
 
 div.body {
+    color: cadetblue;
     padding-top: 20px;
 }
 
@@ -61,6 +64,7 @@ div.links {
 
 div.links a {
     display: table-cell;
+    color:cornflowerblue;
     text-align: center;
 }
 
@@ -77,6 +81,7 @@ div.container h1{
 }
 footer {
     padding-top: 20px;
+    color:cadetblue;
 }
 
 a{
@@ -112,4 +117,8 @@ h1 {
 
 .question-bar {
     display: table-cell;
+    color:blue;
+}
+.no-bullets{
+    list-style-type: none;
 }
