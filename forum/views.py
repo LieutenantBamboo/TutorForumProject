@@ -327,12 +327,37 @@ def search(request):
     return render(request, 'forum/search.html', context_dict)
 
 
-def like_QuestionPost(request):
-    questionPost = request.GET.get('questionPost', None)
-    up = 0
-    if (questionPost):
-        up = questionPost.upvotes + 1
-        questionPost.upvotes = up
-        questionPost.save()
+def likeQuestionPost(request,questionpage_slug):
+    if questionpage_slug:
+        questionpage=QuestionPage.objects.get(slug=questionpage_slug)
+        questionpost=QuestionPost.objects.get(page=questionpage)
+        questionpost.upvotes=questionpost.upvotes+1
+        questionpost.save()
 
-    return HttpResponse(up)
+    return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
+
+def dislikeQuestionPost(request,questionpage_slug):
+    if questionpage_slug:
+        questionpage=QuestionPage.objects.get(slug=questionpage_slug)
+        questionpost=QuestionPost.objects.get(page=questionpage)
+        questionpost.downvotes=questionpost.downvotes+1
+        questionpost.save()
+
+    return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

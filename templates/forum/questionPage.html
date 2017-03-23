@@ -7,7 +7,6 @@
 
 
 {% block body_block %}
-    <script src="{% static "js/QuestionPage-jquery.js" %}"></script>
 
     {% if question_page %}
         <div id="content">
@@ -18,20 +17,14 @@
                 {% if question_posts %}
                     <div class="question-wrapper">
                         {% for question_post in question_posts %}
+                            <h1 id="votes">{{ question_post.upvotes }}<img src="{% static 'images/like.JPG' %}",alt="upvote"/> <br>{{ question_post.downvotes }}<img src="{% static 'images/dislike.JPG' %}",alt="downvote"/></h1>
                             <div class="question">
                                 <table>
                                     <tr id="content-row">
                                         <td id="vote-column">
-                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-                                            <span class="vote"></span>
-                                            <!--
-                                            <button id="up" data="{{ question_post }}"
-                                                    onclick="IncrementUpVote({{ question_post }})">Upvote
-                                            </button>
-                                            <button id="down" data="{{ question_post }}"
-                                                    onclick="IncrementDownVote({{ question_post }})">Downvote
-                                            </button>
-                                            -->
+                                            <a href="/forum/questionPost/upvote/{{ question_post.page.slug }}/"><img src="{% static 'images/like.JPG' %}",alt="upvote"/></a>
+                                            <a href="/forum/questionPost/downvote/{{ question_post.page.slug }}/"><img src="{% static 'images/dislike.JPG' %}",alt="downvote"/></a>
+
                                         </td>
 
                                         <td id="content-column">
@@ -106,10 +99,7 @@
                 {% else %}
                     <strong>No posts yet!</strong>
                 {% endif %}
-            <div id="sidebar" class="sidebar">
-                <h1 id="votes">Upvotes={{ question_post.upvotes }} <br>
-                    Downvotes={{ question_post.downvotes }}</h1>
-            </div>
+            <div id="sidebar" class="sidebar"></div>
 
         </div>
     {% else %}
@@ -120,16 +110,7 @@
         document.getElementById("sidebar").innerHTML = txt;
         document.getElementById("votes").innerHTML = "";
 
-        function IncrementUpVote(questionPost) {
-            questionPost.upvotes = questionPost.upvotes + 1;
-            questionPost.save();
-            window.location.reload();
-        }
-        function IncrementDownVote(questionPost) {
-            questionPost.downvotes = questionPost.downvotes + 1;
-            questionPost.save();
-            window.location.reload();
-        }
+
 
     </script>
 
