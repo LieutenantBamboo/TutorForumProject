@@ -1,5 +1,5 @@
 from django import forms
-from forum.models import UserProfile, QuestionPage, QuestionPost
+from forum.models import UserProfile, QuestionPage, QuestionPost, Comment
 from django.contrib.auth.models import User
 from forum.models import Module
 
@@ -30,4 +30,9 @@ class QuestionPostForm(forms.ModelForm):
     class Meta:
         model = QuestionPost
         fields = ('text_field',)
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
 
