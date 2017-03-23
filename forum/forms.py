@@ -19,11 +19,11 @@ class UserProfileForm(forms.ModelForm):
 
 
 class QuestionPageForm(forms.ModelForm):
-    # module = forms.ModelChoiceField(queryset=Module.objects.all().order_by('name'))
+    module = forms.ModelChoiceField(queryset=Module.objects.all().order_by('name'))
 
     class Meta:
         model = QuestionPage
-        fields = ('title',)  # 'module',)
+        fields = ('title', 'module', )
 
 
 class QuestionPostForm(forms.ModelForm):

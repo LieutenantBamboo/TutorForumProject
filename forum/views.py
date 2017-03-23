@@ -203,12 +203,11 @@ def create_question(request):
 
             # Holds back the saving of the question_page
             # until question_post data integrity is confirmed
-            question_page = question_page_form.save(commit=False)
+            question_page = question_page_form.save(commit=True)
             question_post = question_post_form.save(commit=False)
-            question_post.page = question_page
 
+            question_post.page = question_page
             question_post.question = True
-            question_page.save()
 
             # For later implementation if we want pics in posts
             # Did the user supply a post picture?
@@ -217,6 +216,7 @@ def create_question(request):
 
             # Save the QuestionPost model instance
             question_post.save()
+            return HttpResponseRedirect(reverse('index'))
         else:
             # Invalid form(s): Print errors to console/log
             print(question_page_form.errors, question_post_form.errors)

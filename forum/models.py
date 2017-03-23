@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
+
 # College level (Only several Colleges)
 class College(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -66,7 +67,6 @@ class Module(models.Model):
 class QuestionPage(models.Model):
     module = models.ForeignKey(Module, null=True)
     max_length = 128
-    id = models.IntegerField(unique=True, primary_key=True)
     title = models.CharField(max_length=max_length, unique=True)
     locked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
@@ -104,10 +104,10 @@ class QuestionPost(models.Model):
         verbose_name_plural = "QuestionPosts"
 
     def __str__(self):
-        return self.page.title
+        return self.text_field
 
     def __unicode__(self):
-        return self.page.title
+        return self.text_field
 
 
 class UserProfile(models.Model):
