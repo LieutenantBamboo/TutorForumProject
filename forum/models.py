@@ -107,14 +107,7 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class upvoteQuestionPost(models.Model):
-    users = models.ManyToManyField(UserProfile)
-    count = models.IntegerField(default=0)
 
-
-class downvoteQuestionPost(models.Model):
-    user = models.ForeignKey(UserProfile)
-    count = models.IntegerField(default=1)
 
 
 # Contains each question, whether it be a question or an answer
@@ -125,8 +118,8 @@ class QuestionPost(models.Model):
     id = models.IntegerField(default=0, primary_key=True)
     # Boolean as to whether it is a student question or a tutor answer
     question = models.BooleanField(default=False)
-    upvotes = models.ForeignKey(upvoteQuestionPost,null=True,unique=False)
-    downvotes = models.ForeignKey(downvoteQuestionPost,null=True, unique=False)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
     text_field = models.CharField(max_length=10000, unique=False)
 
     # slug = models.SlugField(unique=True, default="")

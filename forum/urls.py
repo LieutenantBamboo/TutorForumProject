@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^search/$', views.search, name='search'),
     url(r'^questionPost/upvote/(?P<questionpage_slug>[\w\-]+)/$', views.likeQuestionPost, name='likeQuestionPost'),
     url(r'^questionPost/downvote/(?P<questionpage_slug>[\w\-]+)/$', views.dislikeQuestionPost, name='dislikeQuestionPost'),
+    url(r'^questionPost/delete/(?P<questionpage_slug>[\w\-]+)/$', views.deleteQuestionPost, name='deleteQuestionPost'),
 
 
 ]
