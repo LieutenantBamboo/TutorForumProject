@@ -135,7 +135,7 @@ class UserProfile(models.Model):
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
 class Comment(models.Model):
     max_comment_length = 1024
-    post = models.ForeignKey(QuestionPost, default="")
+    post = models.ForeignKey(QuestionPost, null=True)
     user_profile = models.ForeignKey(UserProfile, null=True)
     content = models.TextField(max_length=max_comment_length)
     upvotes = models.IntegerField(default=0)

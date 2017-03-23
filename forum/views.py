@@ -248,9 +248,11 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     module = Module.objects.get(slug=module_name_slug)
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
     question_posts = QuestionPost.objects.filter(page=question_page)
+    comments = Comment.objects.filter(post__in=question_posts)
 
-    context_dict['questionPosts'] = question_posts
-    context_dict['questionPage'] = question_page
+    context_dict['question_posts'] = question_posts
+    context_dict['question_page'] = question_page
+    context_dict['comments'] = comments
     context_dict['module'] = module
 
     return render(request, 'forum/questionPage.html', context_dict)
@@ -258,14 +260,12 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
 
 def search(request):
     if request.method == 'GET':
-        searchText=request.GET.get('search')
-        answers=QuestionPage.objects.filter(title=searchText)
+        searchText = request.GET.get('search')
+        answers = QuestionPage.objects.filter(title=searchText)
     else:
-       answers=''
+        answers = ''
 
     context_dict = {}
-    context_dict['answers']=answers
-
-
+    context_dict['answers'] = answers
 
     return render(request, 'forum/search.html', context_dict)

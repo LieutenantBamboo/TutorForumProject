@@ -2,27 +2,53 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	- {{ module.name }}: {{ question_page.title }}
+    - {{ module.name }}: {{ question_page.title }}
 {% endblock %}
 
 {% block body_block %}
-	{% if question_page %}
-		<h1>{{ question_page.title }}</h1>
-		
-		{% if question_posts %}
-			<div>
-			{% for question_post in question_posts %}
-				<strong>{{ question_post.title }}</strong>
-                {{ question_post.text_field }}
-			{% endfor %}
+    {% if question_page %}
+        <div id="content">
+            <div id="question-title">
+                <h1>{{ question_page.title }}</h1>
             </div>
-		
-		{% else %}
-			<strong>No posts yet!</strong>
-		{% endif %}
-		
-		
-	{% else %}
-		The specified question page does not exist!
-	{% endif %}
+            <div id="questions" class="content">
+                {% if question_posts %}
+                    <div class="question-wrapper">
+                        {% for question_post in question_posts %}
+                            <div class="question">
+                                <table>
+                                    <tr id="content-row">
+                                        <td id="vote-column">
+                                            <a href="">
+                                                Upvote / Downvote
+                                            </a>
+                                        </td>
+                                        <td id="content-column">
+                                            {{ question_post.text_field }}
+                                        </td>
+                                    </tr>
+                                    {% if comments %}
+                                        <tr id="comment-row">
+
+                                            <td></td>
+                                        </tr>
+                                    {% else %}
+                                        <tr id="comment-row">
+                                            <!-- Post a comment -->
+                                        </tr>
+                                    {% endif %}
+                                </table>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    </div>
+                {% else %}
+                    <strong>No posts yet!</strong>
+                {% endif %}
+            <div id="sidebar" class="sidebar">Sidebar boi</div>
+
+        </div>
+    {% else %}
+        The specified question page does not exist!
+    {% endif %}
 {% endblock %}

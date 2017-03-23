@@ -1,7 +1,7 @@
 h1 {
     display: block;
     font-size: 1.5em;
-    color:cornflowerblue;
+    color: cornflowerblue;
     margin-top: 1em;
     margin-bottom: 0.67em;
     margin-left: 0.67em;
@@ -30,9 +30,9 @@ header {
     width: 100%;
 }
 
-header a{
+header a {
     color: #ffffff;
-	margin: 20px;
+    margin: 20px;
     display: table-cell;
     width: 100%;
     table-layout: fixed;
@@ -59,12 +59,12 @@ div.body {
 
 div.links {
     display: table;
-    width:100%;
+    width: 100%;
 }
 
 div.links a {
     display: table-cell;
-    color:cornflowerblue;
+    color: cornflowerblue;
     text-align: center;
 }
 
@@ -72,22 +72,22 @@ div.intro {
     display: flex;
 }
 
-div.intro h1{
+div.intro h1 {
     padding-left: 10px;
 }
 
-div.container h1{
+div.container h1 {
 
 }
+
 footer {
     padding-top: 20px;
-    color:cadetblue;
+    color: cadetblue;
 }
 
-a{
+a {
     margin: 0 1em 0 0;
 }
-
 
 h1 {
     display: block;
@@ -99,33 +99,54 @@ h1 {
     font-weight: bold;
 }
 
-
 .link {
-    position:relative;
+    position: relative;
     margin: 0 0 20px 20px;
-    float:right;
-    clear:left;
+    float: right;
+    clear: left;
     width: 120px;
     padding: 100%;
-    top:10%;
-    right:5%;
-	}
+    top: 10%;
+    right: 5%;
+}
 
 .question-wrapper {
     display: block;
 }
 
+.question {
+    border: solid;
+}
+
 .question-bar {
     display: table-cell;
-    color:blue;
+    color: blue;
 }
-.no-bullets{
-     padding-right: 10px;
+
+.content {
+    border: solid;
+    width: 80%;
+    float: left;
+    position: relative;
+}
+
+.sidebar {
+    border: solid;
+    width: 20%;
+    float: right;
+    position: relative;
+    align-self: center;
+}
+
+.no-bullets {
+    padding-right: 10px;
     list-style-type: none;
 
 }
 
-#header-search{
-    position:relative;
-     float:right;
+#header-search {
+    position: relative;
+    float: right;
 }
+
+
