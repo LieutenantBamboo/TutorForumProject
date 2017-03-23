@@ -38,39 +38,50 @@
                                             {{ question_post.text_field }}
                                         </td>
                                     </tr>
+
                                     <tr id="comment-row">
-                                        <td id="user-column">
-                                            {% if comments %}
-
+                                        {% if comments %}
+                                            <td id="user-column" width="50%" style="padding-left: 10px">
                                                 <!-- Comments shown here -->
-                                                {% for comment in comments %}
-                                                    <tr>{{ comment.content }}</tr>
-                                                {% endfor %}
-                                                <!-- End of comment section -->
 
-                                            {% else %}
-                                                No comments present
-                                            {% endif %}
-                                    </td>
-                                    <td id="user-column">
-                                        {% if comment.user_profile %}
-                                            {{ comment.user_profile }}
+                                                    {% for comment in comments %}
+                                                    <p>{{ comment.content }}</p>
+                                                    {% endfor %}
+
+                                                <!-- End of comment section -->
+                                            </td>
+                                            <td id="user-column">
+                                                {% for comment in comments %}
+                                                    {% if comment.user_profile %}
+                                                        <a href="{% url 'other_profile' comment.user_profile %}" style="margin: 0 0 0 0">
+                                                            <p>{{ comment.user_profile }}</p>
+                                                        </a>
+                                                    {% else %}
+                                                        Anon
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                            </td>
+
+
+                                        {% else %}
+                                            No comments present
                                         {% endif %}
-                                    </td>
                                     </tr>
                                     <tr id="post-comment-row">
                                         <!-- Post a comment -->
                                         {% if user.is_authenticated %}
-                                            <tr>
-                                                <form id="comment_form" method="post" action="{% url 'create-comment' module.slug question_page.slug question_post.id %}"
-                                                      enctype="multipart/form-data">
-                                                    {% csrf_token %}
-                                                    <!-- Display form -->
-                                                    {{ comment_form.as_p }}
-                                                    <!-- Provide a button to click to submit the form -->
-                                                    <input type="submit" name="submit" value="Post">
-                                                </form>
-                                            </tr>
+
+                                            <form id="comment_form" method="post"
+                                                  action="{% url 'create-comment' module.slug question_page.slug question_post.id %}"
+                                                  enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <!-- Display form -->
+                                                {{ comment_form.as_p }}
+                                                <!-- Provide a button to click to submit the form -->
+                                                <input type="submit" name="submit" value="Post">
+                                            </form>
+
                                         {% else %}
                                             Please login to post a comment
                                         {% endif %}
@@ -78,6 +89,18 @@
                                 </table>
                             </div>
                         {% endfor %}
+                        <div id="answer-question">
+                            <form id="answer_form" method="post"
+                                  action="{% url 'create-post' module.slug question_page.slug %}"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <!-- Display form -->
+                                Please enter your response:
+                                {{ post_form.as_p }}
+                                <!-- Provide a button to click to submit the form -->
+                                <input type="submit" name="submit" value="Post">
+                            </form>
+                        </div>
                     </div>
                     </div>
                 {% else %}

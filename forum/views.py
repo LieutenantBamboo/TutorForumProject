@@ -279,6 +279,41 @@ def show_question_page(request, module_name_slug, question_page_name_slug, quest
     return render(request, 'forum/questionPage.html', context_dict)
 
 
+def create_post(request, module_name_slug, question_page_name_slug):
+    context_dict = {}
+
+    module = Module.objects.get(slug=module_name_slug)
+    question_page = QuestionPage.objects.get(slug=question_page_name_slug)
+
+    if request.method == 'POST':
+        post_form = QuestionPostForm(data=request.POST)
+        if post_form.is_valid():
+
+            # Save comment instance
+            post = post_form.save(commit=False)
+            post.id = question_page.num_of_posts + 1
+            question_page.num_of_posts += 1
+            question_page.save()
+            post.page = question_page
+            post.save()
+
+        else:
+            # Invalid form(s): Print errors to console/log
+            print(post_form.errors)
+    else:
+        post_form = QuestionPostForm
+
+    context_dict['question_page'] = question_page
+    context_dict['module'] = module
+
+    return render(request, 'forum/questionPage.html', context_dict)
+
+
+def other_profile(request, user_profile):
+    context_dict = {'user_profile': user_profile}
+    return render(request, 'forum/other_user.html', context_dict)
+
+
 def search(request):
     if request.method == 'GET':
         searchText = request.GET.get('search')
