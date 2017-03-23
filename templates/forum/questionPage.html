@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body_block %}
+    <script src="{% static "js/QuestionPage-jquery.js" %}"></script>
     {% if question_page %}
         <div id="content">
             <div id="question-title">
@@ -19,10 +20,10 @@
                                 <table>
                                     <tr id="content-row">
                                         <td id="vote-column">
-                                            <a href="">
-                                                Upvote / Downvote
-                                            </a>
+                                            <button id="up" data="{{ question_post }}" onclick="IncrementUpVote({{ question_post }})">Upvote</button>
+                                            <button id="down" data="{{ question_post }}" onclick="IncrementDownVote({{ question_post }})">Downvote</button>
                                         </td>
+                                        <h1 id="votes">Upvotes={{ question_post.upvotes }} <br> Downvotes={{ question_post.downvotes }}</h1>
                                         <td id="content-column">
                                             {{ question_post.text_field }}
                                         </td>
@@ -45,10 +46,28 @@
                 {% else %}
                     <strong>No posts yet!</strong>
                 {% endif %}
-            <div id="sidebar" class="sidebar">Sidebar boi</div>
+            <div id="sidebar" class="sidebar"></div>
 
         </div>
     {% else %}
         The specified question page does not exist!
     {% endif %}
+     <script type="text/javascript">
+         txt=document.getElementById("votes").innerHTML;
+         document.getElementById("sidebar").innerHTML=txt;
+         document.getElementById("votes").innerHTML="";
+
+         function IncrementUpVote(questionPost){
+             questionPost.upvotes=questionPost.upvotes+1;
+             questionPost.save();
+             window.location.reload();
+         }
+         function IncrementDownVote(questionPost){
+             questionPost.downvotes=questionPost.downvotes+1;
+             questionPost.save();
+             window.location.reload();
+         }
+
+      </script>
+
 {% endblock %}

@@ -10,6 +10,7 @@ from django.contrib.auth import logout
 from django.template import RequestContext
 from forum.models import QuestionPost, Comment
 from django.contrib.postgres import *
+
 import uuid
 
 
@@ -258,6 +259,8 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     return render(request, 'forum/questionPage.html', context_dict)
 
 
+
+
 def search(request):
     if request.method == 'GET':
         searchText = request.GET.get('search')
@@ -269,3 +272,14 @@ def search(request):
     context_dict['answers'] = answers
 
     return render(request, 'forum/search.html', context_dict)
+
+
+def like_QuestionPost(request):
+    questionPost=request.GET.get('questionPost',None)
+    up=0
+    if(questionPost):
+        up=questionPost.upvotes+1
+        questionPost.upvotes=up
+        questionPost.save()
+
+    return HttpResponse(up)
