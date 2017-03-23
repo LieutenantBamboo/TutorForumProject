@@ -3,13 +3,14 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from forum.models import College, School, Module, QuestionPage, QuestionPost, UserProfile
-from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm
+from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.template import RequestContext
 from forum.models import QuestionPost, Comment
 from django.contrib.postgres import *
+from django.shortcuts import get_object_or_404
 
 import uuid
 
@@ -207,6 +208,7 @@ def create_question(request):
             question_page = question_page_form.save(commit=True)
             question_post = question_post_form.save(commit=False)
 
+            question_post.id = question_page.num_of_posts
             question_post.page = question_page
             question_post.question = True
 
@@ -243,7 +245,7 @@ def show_questions_page(request, module_name_slug):
 
 
 # Show each individual question
-def show_question_page(request, module_name_slug, question_page_name_slug):
+def show_question_page(request, module_name_slug, question_page_name_slug, question_post=None):
     context_dict = {}
 
     module = Module.objects.get(slug=module_name_slug)
@@ -251,14 +253,30 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     question_posts = QuestionPost.objects.filter(page=question_page)
     comments = Comment.objects.filter(post__in=question_posts)
 
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # Save user data to database
+
+            # Save comment instance
+            comment = comment_form.save(commit=False)
+            q_post = question_post  # request.POST.get('question_post')
+            comment.post = get_object_or_404(QuestionPost, id=q_post)
+            comment.user_profile = UserProfile.objects.get(user=request.user)
+            comment.save()
+        else:
+            # Invalid form(s): Print errors to console/log
+            print(comment_form.errors)
+    else:
+        comment_form = CommentForm
+
     context_dict['question_posts'] = question_posts
     context_dict['question_page'] = question_page
     context_dict['comments'] = comments
     context_dict['module'] = module
+    context_dict['comment_form'] = comment_form
 
     return render(request, 'forum/questionPage.html', context_dict)
-
-
 
 
 def search(request):
@@ -275,11 +293,11 @@ def search(request):
 
 
 def like_QuestionPost(request):
-    questionPost=request.GET.get('questionPost',None)
-    up=0
-    if(questionPost):
-        up=questionPost.upvotes+1
-        questionPost.upvotes=up
+    questionPost = request.GET.get('questionPost', None)
+    up = 0
+    if (questionPost):
+        up = questionPost.upvotes + 1
+        questionPost.upvotes = up
         questionPost.save()
 
     return HttpResponse(up)

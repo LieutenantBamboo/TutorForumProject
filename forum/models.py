@@ -67,6 +67,7 @@ class Module(models.Model):
 class QuestionPage(models.Model):
     module = models.ForeignKey(Module, null=True)
     max_length = 128
+    num_of_posts = models.IntegerField(default=1)
     title = models.CharField(max_length=max_length, unique=True)
     locked = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
@@ -92,6 +93,7 @@ class QuestionPage(models.Model):
 class QuestionPost(models.Model):
     page = models.ForeignKey(QuestionPage, null=True)
     max_length = 128
+    id = models.IntegerField(default=0, primary_key=True)
     # Boolean as to whether it is a student question or a tutor answer
     question = models.BooleanField(default=False)
     upvotes = models.IntegerField(default=0)
@@ -104,10 +106,10 @@ class QuestionPost(models.Model):
         verbose_name_plural = "QuestionPosts"
 
     def __str__(self):
-        return self.text_field
+        return str(self.id)
 
     def __unicode__(self):
-        return self.text_field
+        return str(self.id)
 
 
 class UserProfile(models.Model):
@@ -134,10 +136,10 @@ class UserProfile(models.Model):
 
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
 class Comment(models.Model):
-    max_comment_length = 1024
+    max_comment_length=1024
     post = models.ForeignKey(QuestionPost, null=True)
     user_profile = models.ForeignKey(UserProfile, null=True)
-    content = models.TextField(max_length=max_comment_length)
+    content = models.CharField(max_length=max_comment_length)
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
 
@@ -145,10 +147,10 @@ class Comment(models.Model):
         verbose_name_plural = "Comments"
 
     def __str__(self):
-        return self.post.page.title
+        return self.content
 
     def __unicode__(self):
-        return self.post.page.title
+        return self.content
 
 # class Photo(models.Model):
 #    post = models.ForeignKey(QuestionPost)

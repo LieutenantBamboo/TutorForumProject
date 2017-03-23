@@ -21,6 +21,9 @@ urlpatterns = [
     url(r'^questions/(?P<module_name_slug>[\w\-]+)/$', views.show_questions_page, name='questions'),
     url(r'^questions/(?P<module_name_slug>[\w\-]+)/(?P<question_page_name_slug>[\w\-]+)/$',
         views.show_question_page, name='question'),
+    url(
+        r'^questions/(?P<module_name_slug>[\w\-]+)/(?P<question_page_name_slug>[\w\-]+)/(?P<question_post>\d+)',
+        views.show_question_page, name='create-comment'),
 
     # Miscellaneous urls
     url(r'^about/', views.about, name='about'),
@@ -35,7 +38,5 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^search/$', views.search, name='search'),
     url(r'^like_questionPost/$', views.like_QuestionPost, name='like_questionPost')
-
-
 
 ]

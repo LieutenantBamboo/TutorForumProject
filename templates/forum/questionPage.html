@@ -33,22 +33,48 @@
                                             </button>
                                             -->
                                         </td>
-                                        <h1 id="votes">Upvotes={{ question_post.upvotes }} <br>
-                                            Downvotes={{ question_post.downvotes }}</h1>
+
                                         <td id="content-column">
                                             {{ question_post.text_field }}
                                         </td>
                                     </tr>
-                                    {% if comments %}
-                                        <tr id="comment-row">
+                                    <tr id="comment-row">
+                                        <td id="user-column">
+                                            {% if comments %}
 
-                                            <td></td>
-                                        </tr>
-                                    {% else %}
-                                        <tr id="comment-row">
-                                            <!-- Post a comment -->
-                                        </tr>
-                                    {% endif %}
+                                                <!-- Comments shown here -->
+                                                {% for comment in comments %}
+                                                    <tr>{{ comment.content }}</tr>
+                                                {% endfor %}
+                                                <!-- End of comment section -->
+
+                                            {% else %}
+                                                No comments present
+                                            {% endif %}
+                                    </td>
+                                    <td id="user-column">
+                                        {% if comment.user_profile %}
+                                            {{ comment.user_profile }}
+                                        {% endif %}
+                                    </td>
+                                    </tr>
+                                    <tr id="post-comment-row">
+                                        <!-- Post a comment -->
+                                        {% if user.is_authenticated %}
+                                            <tr>
+                                                <form id="comment_form" method="post" action="{% url 'create-comment' module.slug question_page.slug question_post.id %}"
+                                                      enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <!-- Display form -->
+                                                    {{ comment_form.as_p }}
+                                                    <!-- Provide a button to click to submit the form -->
+                                                    <input type="submit" name="submit" value="Post">
+                                                </form>
+                                            </tr>
+                                        {% else %}
+                                            Please login to post a comment
+                                        {% endif %}
+                                    </tr>
                                 </table>
                             </div>
                         {% endfor %}
@@ -57,7 +83,10 @@
                 {% else %}
                     <strong>No posts yet!</strong>
                 {% endif %}
-            <div id="sidebar" class="sidebar"></div>
+            <div id="sidebar" class="sidebar">
+                <h1 id="votes">Upvotes={{ question_post.upvotes }} <br>
+                    Downvotes={{ question_post.downvotes }}</h1>
+            </div>
 
         </div>
     {% else %}

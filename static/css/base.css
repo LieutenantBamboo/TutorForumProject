@@ -28,6 +28,7 @@ header {
     background-color: #000000;
     box-sizing: border-box;
     width: 100%;
+    z-index: 9999;
 }
 
 header a {
