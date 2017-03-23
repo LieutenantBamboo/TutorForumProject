@@ -41,7 +41,7 @@ header a {
 
 div.container {
     display: table;
-    color: lightblue;
+    color: black;
 }
 
 div.intro {
@@ -50,16 +50,23 @@ div.intro {
 
 div.login {
     display: table-cell;
+    vertical-align: middle;
 }
 
 div.body {
-    color: cadetblue;
+    color: black;
     padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.body h1 {
+    color: black;
 }
 
 div.links {
     display: table;
     width: 100%;
+    padding-top: 20px;
 }
 
 div.links a {
@@ -144,9 +151,23 @@ h1 {
 
 }
 
-#header-search {
+.search {
     position: relative;
     float: right;
+}
+
+.vote {
+  display: inline-block;
+  overflow: hidden;
+  width: 40px;
+  height: 25px;
+  cursor: pointer;
+  background: url('/static/images/up-sprite.png');
+  background-position: 0 -25px;
+}
+
+.vote.on {
+  background-position: 0 2px;
 }
 
 
