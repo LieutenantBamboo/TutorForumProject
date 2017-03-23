@@ -331,8 +331,9 @@ def likeQuestionPost(request,questionpage_slug):
     if questionpage_slug:
         questionpage=QuestionPage.objects.get(slug=questionpage_slug)
         questionpost=QuestionPost.objects.get(page=questionpage)
-        questionpost.upvotes=questionpost.upvotes+1
+        questionpost.upvotes.count=questionpost.upvotes.count+1
         questionpost.save()
+        questionpost.upvotes.save()
 
     return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
 
@@ -340,8 +341,10 @@ def dislikeQuestionPost(request,questionpage_slug):
     if questionpage_slug:
         questionpage=QuestionPage.objects.get(slug=questionpage_slug)
         questionpost=QuestionPost.objects.get(page=questionpage)
-        questionpost.downvotes=questionpost.downvotes+1
+        questionpost.downvotes.count=questionpost.downvotes.count+1
         questionpost.save()
+        questionpost.downvotes.save()
+
 
     return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
 

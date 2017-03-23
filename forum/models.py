@@ -3,7 +3,6 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
 
-
 # College level (Only several Colleges)
 class College(models.Model):
     name = models.CharField(max_length=128, unique=True)
@@ -89,29 +88,6 @@ class QuestionPage(models.Model):
         return self.title
 
 
-# Contains each question, whether it be a question or an answer
-class QuestionPost(models.Model):
-    page = models.ForeignKey(QuestionPage, null=True)
-    max_length = 128
-    id = models.IntegerField(default=0, primary_key=True)
-    # Boolean as to whether it is a student question or a tutor answer
-    question = models.BooleanField(default=False)
-    upvotes = models.IntegerField(default=0)
-    downvotes = models.IntegerField(default=0)
-    text_field = models.CharField(max_length=10000, unique=False)
-
-    # slug = models.SlugField(unique=True, default="")
-
-    class Meta:
-        verbose_name_plural = "QuestionPosts"
-
-    def __str__(self):
-        return str(self.id)
-
-    def __unicode__(self):
-        return str(self.id)
-
-
 class UserProfile(models.Model):
     # Required Line - links class to model instance
     user = models.OneToOneField(User)
@@ -131,12 +107,46 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class upvoteQuestionPost(models.Model):
+    users = models.ManyToManyField(UserProfile)
+    count = models.IntegerField(default=0)
+
+
+class downvoteQuestionPost(models.Model):
+    user = models.ForeignKey(UserProfile)
+    count = models.IntegerField(default=1)
+
+
+# Contains each question, whether it be a question or an answer
+class QuestionPost(models.Model):
+    user = models.ForeignKey(UserProfile)
+    page = models.ForeignKey(QuestionPage, null=True)
+    max_length = 128
+    id = models.IntegerField(default=0, primary_key=True)
+    # Boolean as to whether it is a student question or a tutor answer
+    question = models.BooleanField(default=False)
+    upvotes = models.ForeignKey(upvoteQuestionPost,null=True,unique=False)
+    downvotes = models.ForeignKey(downvoteQuestionPost,null=True, unique=False)
+    text_field = models.CharField(max_length=10000, unique=False)
+
+    # slug = models.SlugField(unique=True, default="")
+
+    class Meta:
+        verbose_name_plural = "QuestionPosts"
+
+    def __str__(self):
+        return str(self.id)
+
+    def __unicode__(self):
+        return str(self.id)
+
+
 # YEA BOI
 
 
 # Multiple comments may be posted per QuestionPost (Many to one relationship)
 class Comment(models.Model):
-    max_comment_length=1024
+    max_comment_length = 1024
     post = models.ForeignKey(QuestionPost, null=True)
     user_profile = models.ForeignKey(UserProfile, null=True)
     content = models.CharField(max_length=max_comment_length)
