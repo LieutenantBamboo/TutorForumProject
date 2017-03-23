@@ -31,7 +31,7 @@
             <p>5 most viewed Question pages: </p>
             <ul>
                 {% for question_page in question_pages %}
-                <li>{{ question_page.title }}</li>
+                <a href="{% url 'redirect' %}{{ question_page.module.slug }}/{{ question_page.slug }}"><li>{{ question_page.title }}</li></a>
                 {% endfor %}
             </ul>
             {% else %}
