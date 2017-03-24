@@ -100,7 +100,7 @@
                                 <h1> Answers: </h1>
                             {% endif %}
                         {% endfor %}
-                        {% if user.is_authenticated and user|has_group:"Tutor" %}
+                        {% if user.is_authenticated and is_tutor %}
                             <div id="answer-question">
                                 <form id="answer_form" method="post"
                                       action="{% url 'create-post' module.slug question_page.slug %}"

@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from forum.models import College, School, Module, QuestionPage, QuestionPost, UserProfile
-from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm, CommentForm
+from forum.forms import UserForm, UserProfileForm, QuestionPageForm, QuestionPostForm, CommentForm, UserGroupForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -101,9 +101,10 @@ def register(request):
         # Attempt to grab information from the raw input data
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
+        group_form = UserGroupForm(data=request.POST)
 
         # If the two forms are valid
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid() and group_form.is_valid():
             # Save user data to database
             user = user_form.save()
 
@@ -116,6 +117,11 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
+            # Assigns group
+            foobar = group_form.cleaned_data
+            group = foobar.get('group')
+            group.user_set.add(user)
+
             # Did the user supply a profile picture?
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
@@ -127,14 +133,15 @@ def register(request):
             registered = True
         else:
             # Invalid form(s): Print errors to console/log
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors, profile_form.errors, group_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
+        group_form = UserGroupForm()
 
     # Render the template depending on the context
     return render(request, 'forum/register.html',
-                  {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+                  {'user_form': user_form, 'profile_form': profile_form, 'group_form': group_form,'registered': registered})
 
 
 @login_required
@@ -255,6 +262,7 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     comments = Comment.objects.filter(post__in=question_posts)
     comment_form = CommentForm
     post_form = QuestionPostForm
+    is_tutor = request.user.groups.filter(name='Tutor').exists()
 
     context_dict['question_posts'] = question_posts
     context_dict['question_page'] = question_page
@@ -262,6 +270,7 @@ def show_question_page(request, module_name_slug, question_page_name_slug):
     context_dict['module'] = module
     context_dict['post_form'] = post_form
     context_dict['comment_form'] = comment_form
+    context_dict['is_tutor'] = is_tutor
 
     return render(request, 'forum/questionPage.html', context_dict)
 

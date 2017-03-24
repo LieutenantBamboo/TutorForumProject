@@ -1,6 +1,6 @@
 from django import forms
 from forum.models import UserProfile, QuestionPage, QuestionPost, Comment
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from forum.models import Module
 
@@ -19,6 +19,13 @@ class UserProfileForm(forms.ModelForm):
         fields = ('picture',)
 
 
+class UserGroupForm(forms.Form):
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
+
+    class Meta:
+        fields = ('group',)
+
+
 class QuestionPageForm(forms.ModelForm):
     module = forms.ModelChoiceField(queryset=Module.objects.all().order_by('name'))
 
@@ -34,6 +41,8 @@ class QuestionPostForm(forms.ModelForm):
 
 
 class CommentForm(forms.ModelForm):
+    password = forms.CharField(label='Comment')
+
     class Meta:
         model = Comment
         fields = ('content',)
