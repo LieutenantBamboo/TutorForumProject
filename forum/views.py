@@ -246,37 +246,15 @@ def show_questions_page(request, module_name_slug):
 
 
 # Show each individual question
-def show_question_page(request, module_name_slug, question_page_name_slug, question_post=None):
+def show_question_page(request, module_name_slug, question_page_name_slug):
     context_dict = {}
 
     module = Module.objects.get(slug=module_name_slug)
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
     question_posts = QuestionPost.objects.filter(page=question_page)
     comments = Comment.objects.filter(post__in=question_posts)
-
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        post_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
-            # Save comment instance
-            comment = comment_form.save(commit=False)
-            q_post = question_post  # request.POST.get('question_post')
-            comment.post = get_object_or_404(QuestionPost, pid=q_post)
-            comment.user_profile = UserProfile.objects.get(user=request.user)
-            comment.save()
-        elif post_form.is_valid():
-            # Save comment instance
-            question_post = post_form.save(commit=False)
-            question_post.user = UserProfile.objects.get(user=request.user)
-            question_post.pid = question_page.num_of_posts
-            question_post.page = question_page
-            question_post.save()
-        else:
-            # Invalid form(s): Print errors to console/log
-            print(comment_form.errors)
-    else:
-        comment_form = CommentForm
-        post_form = QuestionPostForm
+    comment_form = CommentForm
+    post_form = QuestionPostForm
 
     context_dict['question_posts'] = question_posts
     context_dict['question_page'] = question_page
@@ -293,8 +271,11 @@ def create_post(request, module_name_slug, question_page_name_slug):
 
     module = Module.objects.get(slug=module_name_slug)
     question_page = QuestionPage.objects.get(slug=question_page_name_slug)
+    question_posts = QuestionPost.objects.filter(page=question_page)
+    comments = Comment.objects.filter(post__in=question_posts)
 
     if request.method == 'POST':
+        comment_form = CommentForm
         post_form = QuestionPostForm(data=request.POST)
         if post_form.is_valid():
 
@@ -310,13 +291,57 @@ def create_post(request, module_name_slug, question_page_name_slug):
         else:
             # Invalid form(s): Print errors to console/log
             print(post_form.errors)
+        post_form = QuestionPostForm
     else:
         post_form = QuestionPostForm
+        comment_form = CommentForm
 
+    context_dict['question_posts'] = question_posts
     context_dict['question_page'] = question_page
+    context_dict['comments'] = comments
     context_dict['module'] = module
+    context_dict['post_form'] = post_form
+    context_dict['comment_form'] = comment_form
 
-    return render(request, 'forum/questionPage.html', context_dict)
+    return HttpResponseRedirect(
+        '/forum/questions/%s/%s/' % (module.slug, question_page.slug))
+
+
+def create_comment(request, module_name_slug, question_page_name_slug, question_post=None):
+    context_dict = {}
+
+    module = Module.objects.get(slug=module_name_slug)
+    question_page = QuestionPage.objects.get(slug=question_page_name_slug)
+    question_posts = QuestionPost.objects.filter(page=question_page)
+    comments = Comment.objects.filter(post__in=question_posts)
+
+    if request.method == 'POST':
+        post_form = QuestionPostForm
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # Save comment instance
+            comment = comment_form.save(commit=False)
+            q_post = question_post  # request.POST.get('question_post')
+            comment.post = get_object_or_404(QuestionPost, pid=q_post)
+            comment.user_profile = UserProfile.objects.get(user=request.user)
+            comment.save()
+        else:
+            # Invalid form(s): Print errors to console/log
+            print(comment_form.errors)
+        comment_form = CommentForm
+    else:
+        comment_form = CommentForm
+        post_form = QuestionPostForm
+
+    context_dict['question_posts'] = question_posts
+    context_dict['question_page'] = question_page
+    context_dict['comments'] = comments
+    context_dict['module'] = module
+    context_dict['post_form'] = post_form
+    context_dict['comment_form'] = comment_form
+
+    return HttpResponseRedirect(
+        '/forum/questions/%s/%s/' % (module.slug, question_page.slug))
 
 
 def other_profile(request, user_profile):
@@ -337,32 +362,32 @@ def search(request):
     return render(request, 'forum/search.html', context_dict)
 
 
-def likeQuestionPost(request,questionpage_slug):
+def likeQuestionPost(request, question_page_slug, question_post):
+    if question_page_slug:
+        question_page = QuestionPage.objects.get(slug=question_page_slug)
+        question_post = QuestionPost.objects.get(pid=question_post.pid)
+        question_post.upvotes += 1
+        question_post.save()
+
+    return HttpResponseRedirect(
+        'forum/questions/%s/%s/%s' % question_page.module.slug % question_page.slug % question_page.title)
+
+
+def dislikeQuestionPost(request, question_page_slug, question_post):
+    if question_page_slug:
+        question_page = QuestionPage.objects.get(slug=question_page_slug)
+        question_post = QuestionPost.objects.get(pid=question_post.pid)
+        question_post.downvotes += 1
+        question_post.save()
+
+    return HttpResponseRedirect(
+        'forum/questions/%s/%s/%s' % question_page.module.slug % question_page.slug % question_page.title)
+
+
+def deleteQuestionPost(request, questionpage_slug):
     if questionpage_slug:
-        questionpage=QuestionPage.objects.get(slug=questionpage_slug)
-        questionpost=QuestionPost.objects.get(page=questionpage)
-        questionpost.upvotes=questionpost.upvotes+1
-        questionpost.save()
-
-
-    return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
-
-def dislikeQuestionPost(request,questionpage_slug):
-    if questionpage_slug:
-        questionpage=QuestionPage.objects.get(slug=questionpage_slug)
-        questionpost=QuestionPost.objects.get(page=questionpage)
-        questionpost.downvotes=questionpost.downvotes+1
-        questionpost.save()
-
-
-    return HttpResponseRedirect('forum/questions/%s/%s/%s' % questionpage.module.slug  % questionpage.slug  % questionpage.title )
-
-
-def deleteQuestionPost(request,questionpage_slug):
-    if questionpage_slug:
-        questionpage = QuestionPage.objects.get(slug=questionpage_slug)
-        questionpost = QuestionPost.objects.get(page=questionpage)
-        questionpost.delete()
+        question_page = QuestionPage.objects.get(slug=questionpage_slug)
+        question_post = QuestionPost.objects.get(page=question_page)
+        question_post.delete()
 
     return HttpResponseRedirect(reverse('index'))
-

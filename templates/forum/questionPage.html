@@ -31,75 +31,90 @@
 
                                         </td>
 
-                                        <td id="content-column">
+                                        <td id="content-column" style="border: solid; width: 100%;">
                                             {{ question_post.text_field }}
                                         </td>
                                     </tr>
 
-                                    <tr id="comment-row">
-                                        {% if comments %}
-                                            <td id="user-column" width="50%" style="padding-left: 10px">
-                                                <!-- Comments shown here -->
 
-                                                {% for comment in comments %}
-                                                    <p>{{ comment.content }}</p>
-                                                {% endfor %}
-
-                                                <!-- End of comment section -->
-                                            </td>
-                                            <td id="user-column">
-                                                {% for comment in comments %}
-                                                    {% if comment.user_profile %}
-                                                        <a href="{% url 'other_profile' comment.user_profile %}"
-                                                           style="margin: 0 0 0 0">
-                                                            <p>{{ comment.user_profile }}</p>
-                                                        </a>
-                                                    {% else %}
-                                                        Anon
-                                                    {% endif %}
-                                                {% endfor %}
-
-                                            </td>
-
-
-                                        {% else %}
-                                            No comments present
-                                        {% endif %}
-                                    </tr>
                                     <tr id="post-comment-row">
-                                        <!-- Post a comment -->
-                                        {% if user.is_authenticated %}
 
-                                            <form id="comment_form" method="post"
-                                                  action="{% url 'create-comment' module.slug question_page.slug question_post.pid %}"
-                                                  enctype="multipart/form-data">
-                                                {% csrf_token %}
-                                                <!-- Display form -->
-                                                {{ comment_form.as_p }}
-                                                <!-- Provide a button to click to submit the form -->
-                                                <input type="submit" name="submit" value="Post">
-                                            </form>
-
-                                        {% else %}
-                                            Please login to post a comment
-                                        {% endif %}
                                     </tr>
                                 </table>
+                                <div id="comment-row" style="display: flex">
+                                    {% if comments %}
+                                        <div id="comment-column" width="80%" style="padding-left: 10px">
+                                            <!-- Comments shown here -->
+
+                                            {% for comment in comments %}
+                                                {% if comment.post == question_post %}
+                                                <p>{{ comment.content }}</p>
+                                                {% endif%}
+                                            {% endfor %}
+
+                                            <!-- End of comment section -->
+                                        </div>
+                                        <div id="user-column" style="float: right">
+                                            {% for comment in comments %}
+                                                {% if comment.user_profile %}
+                                                    {% if comment.post == question_post %}
+                                                    <a href="{% url 'other_profile' comment.user_profile %}"
+                                                       style="margin: 0 0 0 0">
+                                                        <p>{{ comment.user_profile }}</p>
+                                                    </a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    Anon
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        </div>
+
+
+                                    {% else %}
+                                        No comments present
+                                    {% endif %}
+                                </div>
+
+                                <!-- Post a comment -->
+                                <div style="margin-top: 10px">
+                                    {% if user.is_authenticated %}
+
+                                        <form id="comment_form" method="post"
+                                              action="{% url 'create-comment' module.slug question_page.slug question_post.pid %}"
+                                              enctype="multipart/form-data" style="display: flex">
+                                            {% csrf_token %}
+                                            <!-- Display form -->
+                                            {{ comment_form.as_p }}
+                                            <!-- Provide a button to click to submit the form -->
+                                            <input type="submit" name="submit" value="Post">
+                                        </form>
+
+                                    {% else %}
+                                        Please login to post a comment
+                                    {% endif %}
+                                </div>
                             </div>
+                            {% if forloop.first %}
+                                <h1> Answers: </h1>
+                            {% endif %}
                         {% endfor %}
-                        {% if user.is_authenticated and user.is %}
-                        <div id="answer-question">
-                            <form id="answer_form" method="post"
-                                  action="{% url 'create-post' module.slug question_page.slug %}"
-                                  enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <!-- Display form -->
-                                Please enter your response:
-                                {{ post_form.as_p }}
-                                <!-- Provide a button to click to submit the form -->
-                                <input type="submit" name="submit" value="Post">
-                            </form>
-                        </div>
+                        {% if user.is_authenticated %}
+                            <div id="answer-question">
+                                <form id="answer_form" method="post"
+                                      action="{% url 'create-post' module.slug question_page.slug %}"
+                                      enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <!-- Display form -->
+                                    Enter your response to the student here:
+                                    {{ post_form.as_p }}
+                                    <!-- Provide a button to click to submit the form -->
+                                    <input type="submit" name="submit" value="Post">
+                                </form>
+                            </div>
+                        {% else %}
+                            Only tutors may post answers
+                        {% endif %}
                     </div>
                     </div>
                 {% else %}
@@ -107,9 +122,9 @@
                 {% endif %}
             <div id="sidebar" class="sidebar"></div>
 
-            <h1 id="votes">{{ question_post.upvotes }}<img src="{% static 'images/like.JPG' %}"
+            <h1 id="votes">{{ question_posts.1.upvotes }}<img src="{% static 'images/like.JPG' %}"
                                                            ,alt="upvote"/>
-                <br>{{ question_post.downvotes }}<img src="{% static 'images/dislike.JPG' %}"
+                <br>{{ question_posts.1.downvotes }}<img src="{% static 'images/dislike.JPG' %}"
                                                       ,alt="downvote"/></h1>
         </div>
     {% else %}

@@ -23,7 +23,7 @@ urlpatterns = [
         views.show_question_page, name='question'),
     url(
         r'^questions/(?P<module_name_slug>[\w\-]+)/(?P<question_page_name_slug>[\w\-]+)/(?P<question_post>\d+)',
-        views.show_question_page, name='create-comment'),
+        views.create_comment, name='create-comment'),
     url(r'^questions/(?P<module_name_slug>[\w\-]+)/(?P<question_page_name_slug>[\w\-]+)/create',
         views.create_post, name='create-post'),
 
@@ -40,9 +40,9 @@ urlpatterns = [
     url(r'^login/', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^search/$', views.search, name='search'),
-    url(r'^questionPost/upvote/(?P<questionpage_slug>[\w\-]+)/$', views.likeQuestionPost, name='likeQuestionPost'),
-    url(r'^questionPost/downvote/(?P<questionpage_slug>[\w\-]+)/$', views.dislikeQuestionPost, name='dislikeQuestionPost'),
-    url(r'^questionPost/delete/(?P<questionpage_slug>[\w\-]+)/$', views.deleteQuestionPost, name='deleteQuestionPost'),
+    url(r'^questionPost/upvote/(?P<questionpage_slug>[\w\-]+)/(?P<question_post>\d+)/$', views.likeQuestionPost, name='likeQuestionPost'),
+    url(r'^questionPost/downvote/(?P<questionpage_slug>[\w\-]+)/(?P<question_post>\d+)/$', views.dislikeQuestionPost, name='dislikeQuestionPost'),
+    url(r'^questionPost/delete/(?P<questionpage_slug>[\w\-]+)/(?P<question_post>\d+)/$', views.deleteQuestionPost, name='deleteQuestionPost'),
 
 
 ]
