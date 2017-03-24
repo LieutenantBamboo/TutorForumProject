@@ -8,7 +8,7 @@
 {% block body_block %}
 
     <div>
-           <h1>you can only see this page because you are registered!</h1>
+           <h1>Profile: {{ user.username }}</h1>
             <strong>{{ boldmessage }}</strong><br />
         <h2>{% if user.is_authenticated %}
 			Welcome {{ user.username }}!

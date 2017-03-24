@@ -10,20 +10,24 @@
 
     {% if question_page %}
         <div id="content">
-            <div id="question-title">
-                <h1>{{ question_page.title }}</h1>
-            </div>
             <div id="questions" class="content">
                 {% if question_posts %}
                     <div class="question-wrapper">
                         {% for question_post in question_posts %}
-                            <h1 id="votes">{{ question_post.upvotes }}<img src="{% static 'images/like.JPG' %}",alt="upvote"/> <br>{{ question_post.downvotes }}<img src="{% static 'images/dislike.JPG' %}",alt="downvote"/></h1>
+                            {% if forloop.first %}
+                                <h1>Question: {{ question_page.title }}</h1>
+                            {% else %}
+                                Answer by {{ question_post.user }}
+                            {% endif %}
+
                             <div class="question">
                                 <table>
                                     <tr id="content-row">
                                         <td id="vote-column">
-                                            <a href="/forum/questionPost/upvote/{{ question_post.page.slug }}/"><img src="{% static 'images/like.JPG' %}",alt="upvote"/></a>
-                                            <a href="/forum/questionPost/downvote/{{ question_post.page.slug }}/"><img src="{% static 'images/dislike.JPG' %}",alt="downvote"/></a>
+                                            <a href="/forum/questionPost/upvote/{{ question_post.page.slug }}/"><img
+                                                    src="{% static 'images/like.JPG' %}" ,alt="upvote"/></a>
+                                            <a href="/forum/questionPost/downvote/{{ question_post.page.slug }}/"><img
+                                                    src="{% static 'images/dislike.JPG' %}" ,alt="downvote"/></a>
 
                                         </td>
 
@@ -37,16 +41,17 @@
                                             <td id="user-column" width="50%" style="padding-left: 10px">
                                                 <!-- Comments shown here -->
 
-                                                    {% for comment in comments %}
+                                                {% for comment in comments %}
                                                     <p>{{ comment.content }}</p>
-                                                    {% endfor %}
+                                                {% endfor %}
 
                                                 <!-- End of comment section -->
                                             </td>
                                             <td id="user-column">
                                                 {% for comment in comments %}
                                                     {% if comment.user_profile %}
-                                                        <a href="{% url 'other_profile' comment.user_profile %}" style="margin: 0 0 0 0">
+                                                        <a href="{% url 'other_profile' comment.user_profile %}"
+                                                           style="margin: 0 0 0 0">
                                                             <p>{{ comment.user_profile }}</p>
                                                         </a>
                                                     {% else %}
@@ -66,7 +71,7 @@
                                         {% if user.is_authenticated %}
 
                                             <form id="comment_form" method="post"
-                                                  action="{% url 'create-comment' module.slug question_page.slug question_post.id %}"
+                                                  action="{% url 'create-comment' module.slug question_page.slug question_post.pid %}"
                                                   enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <!-- Display form -->
@@ -82,6 +87,7 @@
                                 </table>
                             </div>
                         {% endfor %}
+                        {% if user.is_authenticated and user.is %}
                         <div id="answer-question">
                             <form id="answer_form" method="post"
                                   action="{% url 'create-post' module.slug question_page.slug %}"
@@ -101,6 +107,10 @@
                 {% endif %}
             <div id="sidebar" class="sidebar"></div>
 
+            <h1 id="votes">{{ question_post.upvotes }}<img src="{% static 'images/like.JPG' %}"
+                                                           ,alt="upvote"/>
+                <br>{{ question_post.downvotes }}<img src="{% static 'images/dislike.JPG' %}"
+                                                      ,alt="downvote"/></h1>
         </div>
     {% else %}
         The specified question page does not exist!
@@ -109,7 +119,6 @@
         txt = document.getElementById("votes").innerHTML;
         document.getElementById("sidebar").innerHTML = txt;
         document.getElementById("votes").innerHTML = "";
-
 
 
     </script>

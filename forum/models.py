@@ -107,15 +107,12 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-
-
-
 # Contains each question, whether it be a question or an answer
 class QuestionPost(models.Model):
     user = models.ForeignKey(UserProfile)
     page = models.ForeignKey(QuestionPage, null=True)
     max_length = 128
-    id = models.IntegerField(default=0, primary_key=True)
+    pid = models.IntegerField(default=0, unique=False)
     # Boolean as to whether it is a student question or a tutor answer
     question = models.BooleanField(default=False)
     upvotes = models.IntegerField(default=0)
@@ -128,10 +125,10 @@ class QuestionPost(models.Model):
         verbose_name_plural = "QuestionPosts"
 
     def __str__(self):
-        return str(self.id)
+        return str(self.pid)
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.pid)
 
 
 # YEA BOI

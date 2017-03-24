@@ -34,8 +34,8 @@ urlpatterns = [
     url(r'^latest_news/', views.latestNews, name='latestNews'),
     url(r'^FAQ/', views.FAQ, name='FAQ'),
     url(r'^register/', views.register, name='register'),
-    url(r'^profile/', views.profile, name='profile'),
-    url(r'^profile/(?P<user_profile>[\w\-]+)', views.other_profile, name='other_profile'),
+    url(r'^profile/$', views.profile, name='profile'),
+    url(r'^profile/(?P<user_profile>[\w\-]+)/$', views.other_profile, name='other_profile'),
     # Login url setup
     url(r'^login/', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),

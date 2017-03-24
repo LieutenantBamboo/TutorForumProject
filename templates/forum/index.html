@@ -8,16 +8,10 @@
 {% block body_block %}
     <div class="container">
         <h1>WELCOME TO THE UNIVERSITY'S OF GLASGOW OFFICIAL TORUM PAGE</h1>
-        {% if user.is_authenticated %}
-            Welcome {{ user.username }}!
-        {% else %}
-            <br></br>
-            Please log in to continue.
-        {% endif %}
 
 
         <div class="row">
-            <div>
+            <div style="float: left">
                 <img src="{% static 'images/indexuni.jpg' %}",alt="glasgow uni"/>
             </div>
                 <div class = "image">
@@ -35,7 +29,7 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <strong>There are no categories present.</strong>
+            <strong>No questions asked yet</strong>
             {% endif %}
         </div>
     </div>

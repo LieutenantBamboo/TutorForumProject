@@ -208,7 +208,8 @@ def create_question(request):
             question_page = question_page_form.save(commit=True)
             question_post = question_post_form.save(commit=False)
 
-            question_post.id = question_page.num_of_posts
+            question_post.user = UserProfile.objects.get(user=request.user)
+            question_post.pid = question_page.num_of_posts
             question_post.page = question_page
             question_post.question = True
 
@@ -255,25 +256,33 @@ def show_question_page(request, module_name_slug, question_page_name_slug, quest
 
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
+        post_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
-            # Save user data to database
-
             # Save comment instance
             comment = comment_form.save(commit=False)
             q_post = question_post  # request.POST.get('question_post')
-            comment.post = get_object_or_404(QuestionPost, id=q_post)
+            comment.post = get_object_or_404(QuestionPost, pid=q_post)
             comment.user_profile = UserProfile.objects.get(user=request.user)
             comment.save()
+        elif post_form.is_valid():
+            # Save comment instance
+            question_post = post_form.save(commit=False)
+            question_post.user = UserProfile.objects.get(user=request.user)
+            question_post.pid = question_page.num_of_posts
+            question_post.page = question_page
+            question_post.save()
         else:
             # Invalid form(s): Print errors to console/log
             print(comment_form.errors)
     else:
         comment_form = CommentForm
+        post_form = QuestionPostForm
 
     context_dict['question_posts'] = question_posts
     context_dict['question_page'] = question_page
     context_dict['comments'] = comments
     context_dict['module'] = module
+    context_dict['post_form'] = post_form
     context_dict['comment_form'] = comment_form
 
     return render(request, 'forum/questionPage.html', context_dict)
@@ -291,7 +300,8 @@ def create_post(request, module_name_slug, question_page_name_slug):
 
             # Save comment instance
             post = post_form.save(commit=False)
-            post.id = question_page.num_of_posts + 1
+            post.user = UserProfile.objects.get(user=request.user)
+            post.pid = question_page.num_of_posts + 1
             question_page.num_of_posts += 1
             question_page.save()
             post.page = question_page
@@ -355,20 +365,4 @@ def deleteQuestionPost(request,questionpage_slug):
         questionpost.delete()
 
     return HttpResponseRedirect(reverse('index'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
