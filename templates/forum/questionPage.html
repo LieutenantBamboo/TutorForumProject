@@ -1,5 +1,6 @@
 {% extends 'forum/base.html' %}
 {% load staticfiles %}
+{% load forum_template_tags %}
 
 {% block title_block %}
     - {{ module.name }}: {{ question_page.title }}
@@ -99,7 +100,7 @@
                                 <h1> Answers: </h1>
                             {% endif %}
                         {% endfor %}
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user|has_group:"Tutor" %}
                             <div id="answer-question">
                                 <form id="answer_form" method="post"
                                       action="{% url 'create-post' module.slug question_page.slug %}"
